@@ -1,0 +1,71 @@
+name: aquifero-vivo
+
+services:
+  db:
+    image: postgis/postgis:17-3.5
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-aquifero_vivo}
+      POSTGRES_USER: ${POSTGRES_USER:-aquifero}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Copie .env.example para .env}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  backend:
+    build: ./backend
+    restart: on-failure
+    environment:
+      DATA_MODE: ${DATA_MODE:-SIMULATED}
+      SIMULATION_SEED: ${SIMULATION_SEED:-42}
+      SIMULATION_WELLS: ${SIMULATION_WELLS:-80}
+      SIMULATION_SECTORS: ${SIMULATION_SECTORS:-20}
+      SIMULATION_DAYS: ${SIMULATION_DAYS:-730}
+      SIMULATION_SCENARIO: ${SIMULATION_SCENARIO:-NORMAL}
+      SIMULATION_MIN_LATITUDE: ${SIMULATION_MIN_LATITUDE:--5.30}
+      SIMULATION_MAX_LATITUDE: ${SIMULATION_MAX_LATITUDE:--4.90}
+      SIMULATION_MIN_LONGITUDE: ${SIMULATION_MIN_LONGITUDE:--42.95}
+      SIMULATION_MAX_LONGITUDE: ${SIMULATION_MAX_LONGITUDE:--42.60}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-aquifero_vivo}
+      POSTGRES_USER: ${POSTGRES_USER:-aquifero}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Copie .env.example para .env}
+      CORS_ORIGINS: '${CORS_ORIGINS:-["http://localhost:5173"]}'
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - ./backend:/app
+      - ./data/simulated:/data/simulated
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-5173}:5173"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

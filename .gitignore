@@ -1,0 +1,57 @@
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+build/
+
+# Frontend
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Logs e bancos locais
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Editores
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Arquivos temporários e do sistema operacional
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Dados locais; mantém apenas os marcadores de diretório
+data/raw/*
+data/processed/*
+data/simulated/*
+!data/**/.gitkeep
+
+# Saídas temporárias da validação local do simulador
+.simulation-pytest-cache/
+.simulation-test-temp-*/
