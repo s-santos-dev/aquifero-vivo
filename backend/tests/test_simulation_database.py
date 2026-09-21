@@ -80,6 +80,39 @@ def test_postgis_relationships_api_and_reseed(db, dataset):
         app.dependency_overrides.clear()
 
 
+def test_indicator_routes_respect_historical_cutoff(db, dataset):
+    seed_dataset(db, dataset)
+    well_id = identifier(dataset.wells[0]["well_id"])
+    sector_id = identifier(dataset.sectors[0]["sector_id"])
+    reference = dataset.well_daily[2]["date"]
+    app.dependency_overrides[get_db] = lambda: db
+    try:
+        with TestClient(app) as client:
+            path = f"/api/v1/wells/{well_id}/indicators"
+            before = client.get(path, params={"reference_date": reference})
+            assert before.status_code == 200, before.text
+            payload = before.json()
+            assert payload["reference_date"] == reference
+            assert payload["groundwater"]["current_static_level"]["status"] == "AVAILABLE"
+            assert payload["rainfall"]["rainfall_30d"]["status"] == "INSUFFICIENT_DATA"
+            assert payload["data_classification"] == "SIMULATED"
+            future = GroundwaterMeasurement(well_id=well_id, measured_at=timestamp("2099-01-01"),
+                                            water_level_m=999, dynamic_level_m=999,
+                                            data_classification="SIMULATED", source=SOURCE)
+            db.add(future)
+            db.add(GroundwaterMeasurement(well_id=well_id, measured_at=timestamp(reference),
+                                          water_level_m=999, dynamic_level_m=999,
+                                          data_classification="PUBLIC", source="OTHER_SOURCE"))
+            db.flush()
+            assert client.get(path, params={"reference_date": reference}).json() == payload
+            sector = client.get(f"/api/v1/sectors/{sector_id}/indicators", params={"reference_date": reference})
+            assert sector.status_code == 200, sector.text
+            assert sector.json()["aggregation"]["well_count"]["value"] == 3
+            assert client.get(path, params={"reference_date": "not-a-date"}).status_code == 422
+    finally:
+        app.dependency_overrides.clear()
+
+
 def test_reset_preserves_public_real_unknown_and_foreign_simulations(db, dataset):
     seed_dataset(db, dataset)
     well = db.get(Well, identifier(dataset.wells[0]["well_id"]))

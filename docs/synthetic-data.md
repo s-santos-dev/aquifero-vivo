@@ -59,7 +59,7 @@ A migration 0003 mantém a proteção existente contra classificação automáti
 | `daily_demand_m3` | m³/dia | SIMULATED | Demanda alocada a cada poço |
 | `pumped_volume_m3` | m³/dia | SIMULATED | Vazão × horas efetivas |
 | `runtime_hours` | h/dia | SIMULATED | Entre 0 e 24 |
-| `utilization` | razão adimensional | SIMULATED | Horas solicitadas/24; pode superar 1 quando há demanda não atendida |
+| `utilization` | razão adimensional | SIMULATED | `requested_volume / (nominal_flow_m3_h × efficiency × 24)`, equivalente a horas solicitadas/24; carga planejada que pode superar 1 quando há demanda não atendida |
 | `operational_failure` | booleano | SIMULATED | Ocorrência de falha simulada |
 | `operating_status` | texto | SIMULATED | OPERATING, IDLE ou FAILED |
 | `source` | texto | SIMULATED | `SIMULATED:AQUIFERO_VIVO` identifica propriedade do seed |

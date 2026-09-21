@@ -49,6 +49,10 @@ def test_dataset_cardinality_and_physical_invariants():
         "well_daily": 480,
     }
     assert all(row["dynamic_level_m"] >= row["static_level_m"] for row in dataset.well_daily)
+    assert all(
+        row["drawdown_m"] == pytest.approx(row["dynamic_level_m"] - row["static_level_m"], abs=0.002)
+        for row in dataset.well_daily
+    )
     assert all(0 <= row["runtime_hours"] <= 24 for row in dataset.well_daily)
     assert all(row["pumped_volume_m3"] >= 0 for row in dataset.well_daily)
     assert all(row["precipitation_mm"] >= 0 for row in dataset.sector_daily)
@@ -93,6 +97,29 @@ def test_pumping_pressure_and_persistent_drawdown_are_coherent(scenarios):
         deltas[scenario] = last - first
     assert deltas[Scenario.NORMAL] < deltas[Scenario.DROUGHT] < deltas[Scenario.SEVERE_STRESS]
     assert deltas[Scenario.SEVERE_STRESS] > 4.0
+
+    # Levels are depths below the simulator reference: a larger value is deeper water.
+    final_static = {
+        scenario: _mean(dataset.well_daily[-per_day:], "static_level_m")
+        for scenario, dataset in scenarios.items()
+    }
+    assert final_static[Scenario.NORMAL] < final_static[Scenario.DROUGHT] < final_static[Scenario.SEVERE_STRESS]
+
+
+def test_well_utilization_is_planned_daily_capacity_fraction(scenarios):
+    dataset = scenarios[Scenario.NORMAL]
+    sector_utilization = {
+        (row["date"], row["sector_id"]): row["system_utilization"]
+        for row in dataset.sector_daily
+    }
+    # Capacity-proportional allocation makes each well's requested-runtime/24
+    # equal to its sector's requested-volume / nominal daily capacity.
+    assert all(
+        row["utilization"] == pytest.approx(
+            sector_utilization[(row["date"], row["sector_id"])], abs=0.00001
+        )
+        for row in dataset.well_daily
+    )
 
 
 def test_prolonged_drought_and_high_demand_create_critical_conditions(scenarios):

@@ -46,6 +46,16 @@ class SectorResponse(CatalogProvenance):
     updated_at: datetime
 
 
+class DashboardSummaryResponse(BaseModel):
+    """Small aggregate used by the operational overview; it never returns measurements."""
+
+    total_wells: int = Field(ge=0)
+    active_wells: int = Field(ge=0)
+    inactive_wells: int = Field(ge=0)
+    total_sectors: int = Field(ge=0)
+    total_measurements: int = Field(ge=0)
+
+
 MeasurementType = Literal["groundwater", "operational", "rainfall"]
 DataClassification = Literal["REAL", "PUBLIC", "SIMULATED"]
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import math
 import uuid
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
@@ -12,6 +12,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.indicators.service import sector_indicators, well_indicators
 from app.models import (
     GroundwaterMeasurement,
     OperationalMeasurement,
@@ -22,6 +23,7 @@ from app.models import (
 )
 from app.schemas.api import (
     DataClassification,
+    DashboardSummaryResponse,
     MeasurementPage,
     MeasurementResponse,
     MeasurementType,
@@ -30,6 +32,7 @@ from app.schemas.api import (
     WellPage,
     WellResponse,
 )
+from app.schemas.indicators import IndicatorResponse
 
 
 router = APIRouter(prefix="/api/v1")
@@ -80,6 +83,25 @@ def _sector_response(sector: ServiceSector, boundary: str | dict[str, Any]) -> S
         boundary=_geometry(boundary),
         created_at=sector.created_at,
         updated_at=sector.updated_at,
+    )
+
+
+@router.get("/dashboard/summary", response_model=DashboardSummaryResponse, tags=["dashboard"],
+            summary="Resumo operacional para a visão geral")
+def dashboard_summary(db: DbSession) -> DashboardSummaryResponse:
+    total_wells = db.scalar(select(func.count()).select_from(Well)) or 0
+    active_wells = db.scalar(select(func.count()).select_from(Well).where(Well.is_active.is_(True))) or 0
+    total_sectors = db.scalar(select(func.count()).select_from(ServiceSector)) or 0
+    total_measurements = sum(
+        db.scalar(select(func.count()).select_from(model)) or 0
+        for model in (GroundwaterMeasurement, OperationalMeasurement, RainfallMeasurement)
+    )
+    return DashboardSummaryResponse(
+        total_wells=total_wells,
+        active_wells=active_wells,
+        inactive_wells=total_wells - active_wells,
+        total_sectors=total_sectors,
+        total_measurements=total_measurements,
     )
 
 
@@ -151,6 +173,19 @@ def get_well(well_id: uuid.UUID, db: DbSession) -> WellResponse:
     return _well_response(row[0], row[1])
 
 
+@router.get("/wells/{well_id}/indicators", response_model=IndicatorResponse, tags=["indicators"],
+            summary="Indicadores históricos de um poço")
+def get_well_indicators(well_id: uuid.UUID, db: DbSession,
+                        reference_date: Annotated[date | None, Query(description="Data de referência em UTC")] = None):
+    well = db.get(Well, well_id)
+    if well is None:
+        raise HTTPException(status_code=404, detail="Poço não encontrado")
+    result = well_indicators(db, well, reference_date)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Poço sem medições")
+    return result
+
+
 @router.get(
     "/sectors",
     response_model=SectorPage,
@@ -197,6 +232,19 @@ def get_sector(sector_id: uuid.UUID, db: DbSession) -> SectorResponse:
     if row is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Setor não encontrado")
     return _sector_response(row[0], row[1])
+
+
+@router.get("/sectors/{sector_id}/indicators", response_model=IndicatorResponse, tags=["indicators"],
+            summary="Indicadores históricos de um setor")
+def get_sector_indicators(sector_id: uuid.UUID, db: DbSession,
+                          reference_date: Annotated[date | None, Query(description="Data de referência em UTC")] = None):
+    sector = db.get(ServiceSector, sector_id)
+    if sector is None:
+        raise HTTPException(status_code=404, detail="Setor não encontrado")
+    result = sector_indicators(db, sector, reference_date)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Setor sem medições")
+    return result
 
 
 def _measurement_selects(

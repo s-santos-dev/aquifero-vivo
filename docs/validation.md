@@ -64,3 +64,11 @@ Persistem dois avisos de depreciação de dependências de teste (Starlette/http
 O cache padrão do pytest no diretório sincronizado apresentou erro de permissão. Os testes Docker usaram `/tmp/aquifero-pytest-cache`; os testes locais usaram diretórios exclusivos. A revisão automática bloqueou a limpeza desses diretórios locais (`backend/.simulation-pytest-cache` e `backend/.simulation-test-temp-20260920a`), que foram mantidos e ignorados no Git. Não houve alteração de permissões para contornar o bloqueio.
 
 O seed não remove cadastros excedentes ao reduzir a configuração, para evitar cascatas sobre medições públicas. Apenas suas próprias medições SIMULATED são removidas com `--reset`; a transação reverte tudo em caso de colisão/erro.
+
+## Indicadores — 2026-09-21
+
+- 63 testes aprovados no contêiner, incluindo PostGIS, novos cálculos puros, corte temporal na API, proveniência, agregação setorial e a equivalência entre utilização do poço e capacidade diária planejada. Permanecem dois avisos de depreciação de dependências de teste.
+- `npm run build` aprovou TypeScript e Vite após a inclusão do painel de indicadores. O projeto ainda não tem scripts de teste ou lint do frontend configurados.
+- API real: `SIM-PI-001` retornou data de referência `2025-12-30`, chuva de 30 dias `100.924` mm, nível estático `34.591` m, drawdown `6.245` m e demanda média de 30 dias `1419.64223` m³/dia. A data histórica `2025-06-30` retornou chuva `161.524` mm e nível estático `32.245` m.
+- Cálculo direto dentro do contêiner: aproximadamente 25 ms por poço e 34 ms por setor na carga de 80 poços. `EXPLAIN (ANALYZE, BUFFERS)` mostrou uso do índice `ix_groundwater_well_measured_at`, 180 linhas examinadas e execução de aproximadamente 1,1 ms para a leitura subterrânea de um poço. Esses tempos são observações locais, não garantia de produção.
+- A validação visual pelo navegador não foi concluída: a ferramenta de navegação não conseguiu confirmar o endereço da aba com confiança suficiente e interrompeu a sessão. O frontend foi verificado por compilação.

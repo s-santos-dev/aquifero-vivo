@@ -8,6 +8,6 @@ O serviço do backend depende do healthcheck do banco e usa `restart: on-failure
 
 `GET /health` indica que o processo da API está respondendo; não verifica disponibilidade do banco. O Compose verifica o banco separadamente com `pg_isready`.
 
-O frontend usa TanStack Query para consultar a saúde da API e Tailwind CSS para estilos. React Leaflet e Recharts estão instalados para etapas futuras, sem mapas ou gráficos nesta entrega.
+O frontend usa TanStack Query para consultar a API, React Leaflet para o mapa e Recharts para o histórico de medições. Os indicadores são calculados sob demanda em `backend/app/indicators/` e expostos pela API sem tabelas adicionais. Consulte [indicators.md](indicators.md) para fórmulas e limites.
 
 Pandas, GeoPandas, NumPy e Scikit-learn são dependências opcionais do backend (`data`), instaladas na imagem Docker. Não há coleta SIAGAS, modelos de ML ou cálculo de risco. Dados locais ficam fora do Git; as pastas são preservadas com `.gitkeep`.

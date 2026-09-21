@@ -23,7 +23,7 @@ aquifero-vivo/
 └── README.md
 ```
 
-TanStack Query consulta poços e setores pela API paginada. React Leaflet exibe os poços e as áreas de atendimento; Recharts permanece disponível para uso futuro. Pandas, GeoPandas, NumPy e Scikit-learn integram o extra Python `data`.
+TanStack Query consulta poços e setores pela API paginada. React Leaflet exibe os poços e as áreas de atendimento; Recharts exibe o histórico de níveis subterrâneos, operação e precipitação. Pandas, GeoPandas, NumPy e Scikit-learn integram o extra Python `data`.
 
 ## Executar com Docker (recomendado)
 
@@ -259,3 +259,51 @@ SIAGAS → Extract → Transform → Validate → Schema interno → PostgreSQL/
 ```
 
 A integração SIAGAS **ainda não existe**. O próximo passo será criar um adaptador de extração e normalização com proveniência pública, validação de coordenadas/unidades, identificadores externos e política de atualização. Ele reutilizará os schemas internos e models já usados pelo simulador. O objetivo é adicionar/substituir a origem sem alterar frontend, contratos principais da API ou o futuro motor de risco. Esta entrega não implementa ML nem um motor de risco.
+
+
+## Consulta do histórico na interface
+
+Selecione um poço no mapa ou na lista para abrir o histórico abaixo do mapa. As abas permitem consultar níveis subterrâneos e operação. Selecione um setor no filtro para consultar sua precipitação; a chuva é do setor selecionado, não uma medição individual do poço.
+
+- Períodos de 30, 90, 365 ou 730 dias, contados a partir da última medição disponível de cada tipo e entidade, incluindo o dia final. Datas e horários são apresentados em UTC.
+- Indicadores de nível estático/dinâmico, vazão, volume bombeado, demanda diária, horas de bombeamento, utilização e precipitação, com suas unidades. Utilização é convertida da fração armazenada para percentual.
+- Gráfico do indicador selecionado e tabela com 20 registros por página, proveniência e falhas operacionais registradas. Valores ausentes aparecem como `—` e não são convertidos em zero.
+- Estados de carregamento, ausência de medições e erro com nova tentativa. Ao mudar de entidade, tipo ou período, os dados são consultados novamente e a paginação é reiniciada.
+
+As consultas usam somente `GET /api/v1/measurements`, filtradas por poço ou setor e tipo. Primeiro é consultada a última medição; depois são carregadas as páginas do período escolhido. Nenhum dataset é gerado, gravado ou redefinido por essa funcionalidade. Não há inferência de risco ou previsão; as medições simuladas são identificadas explicitamente.
+
+## Indicadores hidroclimáticos
+
+A API transforma medições diárias armazenadas em indicadores calculados sob demanda. O poço apresenta chuva do setor vinculado na data de referência, níveis estático e dinâmico, drawdown, vazão, demanda, bombeamento, utilização e falhas. O setor apresenta chuva, quantidade de poços e somas diárias de demanda e volume bombeado. As janelas disponíveis são 7, 30, 60 e 90 dias conforme o indicador; diferenças entre períodos podem exigir até 180 dias.
+
+`GET /api/v1/wells/{id}/indicators` e `GET /api/v1/sectors/{id}/indicators` aceitam `reference_date=YYYY-MM-DD` opcional. Sem o parâmetro, a API usa a última data de medição disponível da entidade, e não a data do computador. Todas as consultas terminam na data solicitada; medições futuras são excluídas. Cada resultado contém `value`, `status`, `unit`, `observed_days` e `required_days`. Uma janela incompleta retorna `value: null` e `status: INSUFFICIENT_DATA`, sem confundir ausência com zero.
+
+Exemplo verificado com a carga sintética atual em 21/09/2026: `SIM-PI-001` tem ID `b934083e-91c9-515e-b1fb-79319194b61d`. A consulta `GET http://localhost:8000/api/v1/wells/b934083e-91c9-515e-b1fb-79319194b61d/indicators` retornou `reference_date: "2025-12-30"`, `rainfall.rainfall_30d.value: 100.924` mm, `groundwater.current_static_level.value: 34.591` m e `operations.demand_avg_30d.value: 1419.64223` m³/dia. Com `?reference_date=2025-06-30`, retornou chuva de 30 dias de `161.524` mm e nível estático de `32.245` m. Esses valores descrevem somente a carga local de demonstração e podem mudar após um novo seed.
+
+Na interface, selecione um poço no mapa ou na lista e use a seção **Indicadores** no painel inferior. O campo de data permite consultar uma referência histórica. Indicadores indisponíveis aparecem como “Dados insuficientes”. A metodologia, as fórmulas e as unidades estão em [docs/indicators.md](docs/indicators.md).
+
+## Funcionalidades do MVP
+
+- [x] Visão Geral com totais calculados pela API
+- [x] Mapa de poços, filtros e acesso aos detalhes
+- [x] Listagem paginada de poços com busca e filtros
+- [x] Detalhes do poço, indicadores e histórico por data
+- [x] Indicadores hidroclimáticos e operacionais
+- [x] Setores e detalhes com indicadores agregados e poços vinculados
+- [ ] Motor de risco
+- [ ] Alertas inteligentes
+- [ ] Cenários 30/60/90
+- [ ] Integração SIAGAS
+
+## Rotas do frontend
+
+- `/dashboard`
+- `/map`
+- `/wells`
+- `/wells/:id`
+- `/sectors`
+- `/sectors/:id`
+
+## Limitações metodológicas
+
+O conjunto operacional atual é sintético. Os indicadores são métricas descritivas, não previsões validadas nem classificações de risco. As janelas de 30/60/90 dias são períodos analíticos retrospectivos, não cenários futuros. O déficit de chuva compara dois períodos consecutivos do próprio histórico; climatologia de longo prazo ainda não foi integrada. Dados públicos reais, incluindo SIAGAS, RIMAS e fontes climáticas, serão tratados em fases posteriores. Não utilize estes resultados em decisões operacionais reais.

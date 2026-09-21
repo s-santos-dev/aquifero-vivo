@@ -1,32 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { Link, NavLink, Outlet, Route, Routes, useNavigate } from 'react-router-dom'
 import L, { type Marker as LeafletMarker } from 'leaflet'
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import type { GeoJsonObject } from 'geojson'
 
-const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
-const pageSize = 100
+import { getAllPages } from './api'
+const MeasurementHistory = lazy(() => import('./MeasurementHistory').then((module) => ({ default: module.MeasurementHistory })))
 
 type PointGeometry = { type: 'Point'; coordinates: [number, number] }
 type MultiPolygonGeometry = { type: 'MultiPolygon'; coordinates: number[][][][] }
 type Well = { data_classification: string; is_synthetic: boolean; source: string | null; id: string; code: string; name: string; location: PointGeometry; municipality: string | null; state: string | null; depth_m: string | number | null; is_active: boolean; updated_at: string }
 type Sector = { id: string; code: string; name: string; description: string | null; boundary: MultiPolygonGeometry }
-type Page<T> = { items: T[]; total: number; page: number; page_size: number; pages: number }
 type Filters = { municipality: string; sectorId: string; status: 'all' | 'active' | 'inactive' }
-
-async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
-  const response = await fetch(`${apiUrl}${path}`, { signal })
-  if (!response.ok) throw new Error(response.status >= 500 ? 'A API encontrou um problema ao consultar os dados.' : 'Não foi possível carregar os dados solicitados.')
-  return response.json() as Promise<T>
-}
-
-async function getAllPages<T>(path: string, signal?: AbortSignal): Promise<T[]> {
-  const separator = path.includes('?') ? '&' : '?'
-  const first = await getJson<Page<T>>(`${path}${separator}page=1&page_size=${pageSize}`, signal)
-  if (first.pages <= 1) return first.items
-  const remaining = await Promise.all(Array.from({ length: first.pages - 1 }, (_, index) => getJson<Page<T>>(`${path}${separator}page=${index + 2}&page_size=${pageSize}`, signal)))
-  return [first.items, ...remaining.map((page) => page.items)].flat()
-}
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, React.ReactNode> = {
@@ -59,17 +45,18 @@ function MapViewport({ wells, selected }: { wells: Well[]; selected: Well | null
 }
 
 function WellMapMarker({ well, selected, onSelect }: { well: Well; selected: boolean; onSelect: () => void }) {
+  const navigate = useNavigate()
   const marker = useRef<LeafletMarker>(null)
   useEffect(() => { if (selected) marker.current?.openPopup() }, [selected])
   const [lng, lat] = well.location.coordinates
-  return <Marker ref={marker} position={[lat, lng]} icon={well.is_active ? markerIcons.active : markerIcons.inactive} eventHandlers={{ click: onSelect }}><Popup className="well-popup" minWidth={240}><div className="popup-card"><div className="popup-head"><span className={`status-dot ${well.is_active ? 'active' : 'inactive'}`} /><span>{well.is_active ? 'Em operação' : 'Inativo'}</span></div><strong>{well.name}</strong><small>{well.code}{well.is_synthetic ? " · SIMULADO — não representa poço real" : ""}</small><div className="popup-grid"><span><em>Município</em>{well.municipality || 'Não informado'}</span><span><em>Profundidade</em>{well.depth_m == null ? '—' : `${Number(well.depth_m).toLocaleString('pt-BR')} m`}</span></div></div></Popup></Marker>
+  return <Marker ref={marker} position={[lat, lng]} icon={well.is_active ? markerIcons.active : markerIcons.inactive} eventHandlers={{ click: onSelect }}><Popup className="well-popup" minWidth={240}><div className="popup-card"><div className="popup-head"><span className={`status-dot ${well.is_active ? 'active' : 'inactive'}`} /><span>{well.is_active ? 'Em operação' : 'Inativo'}</span></div><strong>{well.name}</strong><small>{well.code}{well.is_synthetic ? " · SIMULADO — não representa poço real" : ""}</small><div className="popup-grid"><span><em>Município</em>{well.municipality || 'Não informado'}</span><span><em>Profundidade</em>{well.depth_m == null ? '—' : `${Number(well.depth_m).toLocaleString('pt-BR')} m`}</span></div><button className="popup-link" onClick={() => navigate(`/wells/${well.id}`)}>Ver detalhes</button></div></Popup></Marker>
 }
 
 function EmptyState({ filtered }: { filtered: boolean }) {
   return <div className="state-card empty-state"><span className="state-icon"><Icon name="pin" size={26} /></span><h2>Nenhum poço encontrado</h2><p>{filtered ? 'Ajuste os filtros para ampliar a busca.' : 'A API ainda não possui poços cadastrados.'}</p></div>
 }
 
-export default function App() {
+export function MapPage() {
   const [filters, setFilters] = useState<Filters>({ municipality: '', sectorId: '', status: 'all' })
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [filtersOpen, setFiltersOpen] = useState(false)
@@ -88,14 +75,19 @@ export default function App() {
   const clearFilters = () => setFilters({ municipality: '', sectorId: '', status: 'all' })
   const isError = wellsQuery.isError || sectorsQuery.isError || allWellsQuery.isError
 
-  return <div className="app-shell">
-    <aside className="admin-nav"><div className="brand"><span className="brand-mark"><i /><i /><i /></span><span><b>Aquífero</b><small>Vivo</small></span></div><nav aria-label="Navegação principal"><a href="#visao"><Icon name="grid" />Visão geral</a><a href="#mapa" className="active" aria-current="page"><Icon name="map" />Mapa de poços</a><a href="#pocos"><Icon name="well" />Poços</a><a href="#setores"><Icon name="layers" />Setores</a><a href="#alertas"><Icon name="bell" />Alertas<span className="nav-badge">0</span></a></nav><div className="nav-footer"><a href="#config"><Icon name="settings" />Configurações</a><div className="user-card"><span>AV</span><p><b>Administrador</b><small>Gestão hídrica</small></p></div></div></aside>
-    <main className="workspace"><header className="topbar"><div><p>Monitoramento territorial</p><h1>Mapa de poços</h1></div><div className="top-actions"><span className={`api-status ${isError ? 'offline' : ''}`}><i />{isError ? 'API indisponível' : 'Dados da API'}</span><button className="icon-button" aria-label="Notificações"><Icon name="bell" /></button><span className="avatar">AV</span></div></header>
-      <section className="dashboard" id="mapa"><div className="filter-bar"><div className="filter-title"><span><Icon name="filter" /></span><div><b>Filtros do mapa</b><small>Refine os poços exibidos</small></div></div><button className="mobile-filter-toggle" onClick={() => setFiltersOpen((open) => !open)}><Icon name="filter" />Filtros {hasFilters && <i />}</button><div className={`filter-fields ${filtersOpen ? 'open' : ''}`}><label><span>Município</span><select value={filters.municipality} onChange={(event) => setFilters((current) => ({ ...current, municipality: event.target.value }))} disabled={allWellsQuery.isPending}><option value="">Todos os municípios</option>{municipalities.map((municipality) => <option key={municipality}>{municipality}</option>)}</select></label><label><span>Setor</span><select value={filters.sectorId} onChange={(event) => setFilters((current) => ({ ...current, sectorId: event.target.value }))} disabled={sectorsQuery.isPending}><option value="">Todos os setores</option>{sectorsQuery.data?.map((sector) => <option key={sector.id} value={sector.id}>{sector.name}</option>)}</select></label><label><span>Status</span><select value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value as Filters['status'] }))}><option value="all">Todos os status</option><option value="active">Em operação</option><option value="inactive">Inativos</option></select></label>{hasFilters && <button className="clear-button" onClick={clearFilters}><Icon name="close" size={16} />Limpar</button>}</div></div>
+  return <section className={`dashboard ${selectedWell || selectedSector ? 'with-history' : ''}`} id="mapa"><div className="filter-bar"><div className="filter-title"><span><Icon name="filter" /></span><div><b>Filtros do mapa</b><small>Refine os poços exibidos</small></div></div><button className="mobile-filter-toggle" onClick={() => setFiltersOpen((open) => !open)}><Icon name="filter" />Filtros {hasFilters && <i />}</button><div className={`filter-fields ${filtersOpen ? 'open' : ''}`}><label><span>Município</span><select value={filters.municipality} onChange={(event) => setFilters((current) => ({ ...current, municipality: event.target.value }))} disabled={allWellsQuery.isPending}><option value="">Todos os municípios</option>{municipalities.map((municipality) => <option key={municipality}>{municipality}</option>)}</select></label><label><span>Setor</span><select value={filters.sectorId} onChange={(event) => setFilters((current) => ({ ...current, sectorId: event.target.value }))} disabled={sectorsQuery.isPending}><option value="">Todos os setores</option>{sectorsQuery.data?.map((sector) => <option key={sector.id} value={sector.id}>{sector.name}</option>)}</select></label><label><span>Status</span><select value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value as Filters['status'] }))}><option value="all">Todos os status</option><option value="active">Em operação</option><option value="inactive">Inativos</option></select></label>{hasFilters && <button className="clear-button" onClick={clearFilters}><Icon name="close" size={16} />Limpar</button>}</div></div>
         <div className="content-grid"><div className="map-card">
           {isError ? <div className="map-state"><div className="state-card"><span className="state-icon error"><Icon name="retry" size={26} /></span><h2>Não foi possível carregar o mapa</h2><p>Verifique se a FastAPI está disponível e tente novamente.</p><button onClick={() => { void wellsQuery.refetch(); void sectorsQuery.refetch(); void allWellsQuery.refetch() }}><Icon name="retry" size={17} />Tentar novamente</button></div></div> : <MapContainer center={[-5.1, -39.4]} zoom={7} zoomControl attributionControl className="leaflet-map"><TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />{selectedSector && <GeoJSON key={selectedSector.id} data={selectedSector.boundary as GeoJsonObject} style={{ color: '#087f5b', weight: 2, opacity: 0.8, fillColor: '#34d399', fillOpacity: 0.12 }} />}{wells.map((well) => <WellMapMarker key={well.id} well={well} selected={well.id === selectedId} onSelect={() => setSelectedId(well.id)} />)}<MapViewport wells={wells} selected={selectedWell} /></MapContainer>}
           {!isError && wellsQuery.isPending && <div className="loading-overlay"><span className="loader" /><b>Carregando poços...</b><small>Consultando dados geoespaciais</small></div>}{!isError && !wellsQuery.isPending && wells.length === 0 && <div className="map-state transparent"><EmptyState filtered={hasFilters} /></div>}{!isError && !wellsQuery.isPending && wells.length > 0 && <div className="map-legend"><span><i className="active" />Em operação</span><span><i className="inactive" />Inativo</span></div>}</div>
           <aside className="side-panel"><div className="summary-head"><div><span>POÇOS VISÍVEIS</span><strong>{wellsQuery.isPending ? '—' : wells.length.toLocaleString('pt-BR')}</strong></div><span className="summary-icon"><Icon name="well" size={24} /></span></div><div className="status-summary"><div><span><i className="active" />Em operação</span><b>{wellsQuery.isPending ? '—' : activeCount}</b></div><div><span><i className="inactive" />Inativos</span><b>{wellsQuery.isPending ? '—' : inactiveCount}</b></div></div><div className="list-head"><div><b>Poços no mapa</b><small>{hasFilters ? 'Resultado dos filtros aplicados' : 'Selecione para ver detalhes'}</small></div>{hasFilters && <button onClick={clearFilters}>Limpar</button>}</div><div className="well-list">{wellsQuery.isPending ? Array.from({ length: 5 }, (_, index) => <div className="well-row skeleton" key={index}><i /><span><b /><small /></span></div>) : wells.length === 0 ? <EmptyState filtered={hasFilters} /> : wells.map((well) => <button key={well.id} className={`well-row ${selectedId === well.id ? 'selected' : ''}`} onClick={() => setSelectedId(well.id)}><span className={`row-icon ${well.is_active ? 'active' : 'inactive'}`}><Icon name="well" size={18} /></span><span className="row-content"><b>{well.name}</b><small>{well.code} · {well.municipality || 'Município não informado'}</small></span><span className={`row-status ${well.is_active ? 'active' : 'inactive'}`}>{well.is_active ? 'Operando' : 'Inativo'}</span><Icon name="chevron" size={17} /></button>)}</div><footer className="panel-footer"><span><i />{wells.some((well) => well.is_synthetic) ? "Dados sintéticos: não usar em decisões reais" : "Dados carregados da FastAPI"}</span><small>{wellsQuery.dataUpdatedAt ? `Atualizado às ${new Date(wellsQuery.dataUpdatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}` : 'Aguardando atualização'}</small></footer></aside>
-        </div></section></main>
-  </div>
+        </div>{(selectedWell || selectedSector) && <Suspense fallback={<p role="status">Carregando painel de histórico…</p>}><MeasurementHistory key={`${selectedWell?.id ?? ''}:${selectedSector?.id ?? ''}`} well={selectedWell} sector={selectedSector} /></Suspense>}</section>
+}
+
+function AppLayout() {
+  return <div className="app-shell"><aside className="admin-nav"><div className="brand"><span className="brand-mark"><i /><i /><i /></span><span><b>Aquífero</b><small>Vivo</small></span></div><nav aria-label="Navegação principal"><NavLink to="/dashboard"><Icon name="grid" />Visão geral</NavLink><NavLink to="/map"><Icon name="map" />Mapa de poços</NavLink><NavLink to="/wells"><Icon name="well" />Poços</NavLink><NavLink to="/sectors"><Icon name="layers" />Setores</NavLink><span className="nav-disabled"><Icon name="bell" />Alertas<small>Em desenvolvimento</small></span></nav><div className="nav-footer"><span className="nav-disabled"><Icon name="settings" />Configurações</span><div className="user-card"><span>AV</span><p><b>Administrador</b><small>Gestão hídrica</small></p></div></div></aside><main className="workspace"><header className="topbar"><div><p>Monitoramento territorial</p><h1>Aquífero Vivo</h1></div><div className="top-actions"><span className="api-status"><i />Dados da API</span><button className="icon-button" disabled title="Notificações em desenvolvimento" aria-label="Notificações indisponíveis"><Icon name="bell" /></button><span className="avatar">AV</span></div></header><Outlet /></main></div>
+}
+
+export default function App() {
+  const Pages = lazy(() => import('./Pages'))
+  return <Routes><Route element={<AppLayout />}><Route path="/map" element={<MapPage />} /><Route path="*" element={<Suspense fallback={<p className="page-state">Carregando…</p>}><Pages /></Suspense>} /></Route></Routes>
 }
