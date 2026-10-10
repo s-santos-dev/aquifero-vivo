@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { getAllPages, getJson, type Page } from './api'
@@ -22,6 +23,8 @@ const formatValue = (value: number | null) => value == null ? '—' : value.toLo
 type Entity = { id: string; name: string; code: string }
 
 export function MeasurementHistory({ well, sector }: { well: Entity | null; sector: Entity | null }) {
+  const [search] = useSearchParams()
+  const referenceDate = search.get('reference_date') || ''
   const [kind, setKind] = useState<Kind>(well ? 'groundwater' : 'rainfall')
   const entity = kind === 'rainfall' ? sector : well
   return <section className="history-panel" aria-label="Histórico de medições">
@@ -29,15 +32,16 @@ export function MeasurementHistory({ well, sector }: { well: Entity | null; sect
     <div className="history-tabs" role="group" aria-label="Tipo de medição">{(Object.keys(labels) as Kind[]).filter((type) => type === 'rainfall' ? sector : well).map((type) => <button key={type} aria-pressed={kind === type} onClick={() => setKind(type)}>{labels[type]}</button>)}</div>
     {kind === 'rainfall' && <p>A chuva corresponde ao setor selecionado no filtro do mapa.</p>}
     {well && <Indicators wellId={well.id} />}
-    {entity && <Series key={`${entity.id}:${kind}`} kind={kind} entityId={entity.id} />}
+    {entity && <Series key={`${entity.id}:${kind}:${referenceDate}`} kind={kind} entityId={entity.id} referenceDate={referenceDate} />}
   </section>
 }
 
-function Series({ kind, entityId }: { kind: Kind; entityId: string }) {
+function Series({ kind, entityId, referenceDate }: { kind: Kind; entityId: string; referenceDate: string }) {
   const [days, setDays] = useState(90)
   const [metric, setMetric] = useState<Metric>(metrics[kind][0].key)
   const [page, setPage] = useState(1)
   const params = new URLSearchParams({ type: kind, [kind === 'rainfall' ? 'sector_id' : 'well_id']: entityId })
+  if (referenceDate) params.set('measured_to', `${referenceDate}T23:59:59.999999Z`)
   const path = `/api/v1/measurements?${params}`
   const latest = useQuery({ queryKey: ['measurements', path, 'latest'], queryFn: ({ signal }) => getJson<Page<Measurement>>(`${path}&page_size=1`, signal), retry: 1 })
   const end = latest.data?.items[0]?.measured_at

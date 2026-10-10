@@ -33,12 +33,53 @@ from app.schemas.api import (
     WellResponse,
 )
 from app.schemas.indicators import IndicatorResponse
+from app.schemas.risk import RiskResponse
+from app.risk.service import well_risk
+from app.risk.territorial import assessments, filtered, distribution, alerts
+from app.risk.recommendations import recommendations
+from app.schemas.priority import Classification, PriorityPage, AlertPage, RecommendationsResponse
 
 
 router = APIRouter(prefix="/api/v1")
 DbSession = Annotated[Session, Depends(get_db)]
 PageNumber = Annotated[int, Query(ge=1, description="Número da página")]
 PageSize = Annotated[int, Query(ge=1, le=100, description="Itens por página (máximo 100)")]
+
+
+@router.get('/risks/wells', response_model=PriorityPage, tags=['risk'], summary='Ranking experimental com referência comum')
+def priority_wells(db: DbSession, reference_date: date | None = None, classification: Classification | None = None, sector_id: uuid.UUID | None = None, municipality: str | None = None, page: PageNumber = 1, page_size: PageSize = 20):
+    items, day = assessments(db, reference_date)
+    items = filtered(items, classification, sector_id, municipality)
+    counts = distribution(items)
+    return dict(**_page(items[(page-1)*page_size:page*page_size], len(items), page, page_size), reference_date=day, distribution=counts, evaluated=len(items)-counts['INSUFFICIENT_DATA'], insufficient=counts['INSUFFICIENT_DATA'], high_priority=counts['HIGH']+counts['CRITICAL'])
+
+
+@router.get('/alerts', response_model=AlertPage, tags=['alerts'], summary='Alertas derivados, sem gravação ou efeitos colaterais')
+def derived_alerts(db: DbSession, reference_date: date | None = None, classification: Classification | None = None, sector_id: uuid.UUID | None = None, municipality: str | None = None, page: PageNumber = 1, page_size: PageSize = 20):
+    items, day = assessments(db, reference_date)
+    result = alerts(filtered(items, classification, sector_id, municipality))
+    return dict(**_page(result[(page-1)*page_size:page*page_size], len(result), page, page_size), reference_date=day)
+
+
+@router.get('/wells/{well_id}/recommendations', response_model=RecommendationsResponse, tags=['recommendations'], summary='Sugestões justificadas para avaliação humana')
+def well_recommendations(well_id: uuid.UUID, db: DbSession, reference_date: date | None = None):
+    well = db.get(Well, well_id)
+    if well is None:
+        raise HTTPException(status_code=404, detail='Poço não encontrado')
+    risk = well_risk(db, well, reference_date)
+    return RecommendationsResponse(risk=risk, recommendations=recommendations(risk))
+
+
+@router.get("/wells/{well_id}/risk", response_model=RiskResponse, tags=["risk"],
+            summary="Índice experimental de priorização de um poço")
+def get_well_risk(well_id: uuid.UUID, db: DbSession,
+                  reference_date: Annotated[date | None, Query(description="Data de referência em UTC")] = None):
+    well = db.get(Well, well_id)
+    if well is None:
+        raise HTTPException(status_code=404, detail="Poço não encontrado")
+    return well_risk(db, well, reference_date)
+
+
 
 
 def _page(items: list[Any], total: int, page: int, page_size: int) -> dict[str, Any]:

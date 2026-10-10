@@ -1,8 +1,8 @@
 # Aquífero Vivo
 
-Plataforma web de inteligência preditiva para análise de risco de estresse hídrico em poços e sistemas de abastecimento.
+Plataforma web de inteligência hídrica experimental para análise de risco de estresse hídrico em poços e sistemas de abastecimento.
 
-Esta entrega contém a base do projeto, uma primeira API de consulta, o modelo inicial de persistência hidrogeológica e operacional e um gerador de dados operacionais sintéticos. Não implementa ML, SIAGAS ou motor de risco.
+Esta entrega contém a base do projeto, uma primeira API de consulta, o modelo inicial de persistência hidrogeológica e operacional e um gerador de dados operacionais sintéticos. Implementa indicadores e motor multicritério experimental; não implementa ML ou SIAGAS.
 
 ## Estrutura
 
@@ -258,7 +258,7 @@ Os testes de banco usam schema isolado em uma transação revertida ao final. Se
 SIAGAS → Extract → Transform → Validate → Schema interno → PostgreSQL/PostGIS
 ```
 
-A integração SIAGAS **ainda não existe**. O próximo passo será criar um adaptador de extração e normalização com proveniência pública, validação de coordenadas/unidades, identificadores externos e política de atualização. Ele reutilizará os schemas internos e models já usados pelo simulador. O objetivo é adicionar/substituir a origem sem alterar frontend, contratos principais da API ou o futuro motor de risco. Esta entrega não implementa ML nem um motor de risco.
+A integração SIAGAS **ainda não existe**. O próximo passo será criar um adaptador de extração e normalização com proveniência pública, validação de coordenadas/unidades, identificadores externos e política de atualização. Ele reutilizará os schemas internos e models já usados pelo simulador. O objetivo é adicionar/substituir a origem sem alterar frontend, contratos principais da API ou o futuro motor de risco. Esta entrega não implementa ML; o motor multicritério experimental está disponível.
 
 
 ## Consulta do histórico na interface
@@ -307,3 +307,50 @@ Na interface, selecione um poço no mapa ou na lista e use a seção **Indicador
 ## Limitações metodológicas
 
 O conjunto operacional atual é sintético. Os indicadores são métricas descritivas, não previsões validadas nem classificações de risco. As janelas de 30/60/90 dias são períodos analíticos retrospectivos, não cenários futuros. O déficit de chuva compara dois períodos consecutivos do próprio histórico; climatologia de longo prazo ainda não foi integrada. Dados públicos reais, incluindo SIAGAS, RIMAS e fontes climáticas, serão tratados em fases posteriores. Não utilize estes resultados em decisões operacionais reais.
+
+# Fase 8 — Risco multicritério explicável
+
+O endpoint `GET /api/v1/wells/{id}/risk?reference_date=YYYY-MM-DD` calcula sob demanda um índice experimental de 0 a 100, com cinco grupos, cobertura, classificação e fatores rastreáveis. Nos detalhes do poço, a seção **Análise de Risco** acompanha a data UTC dos indicadores. Cobertura mínima: 80%, exigindo estresse subterrâneo válido; dados ausentes não viram risco zero. Não há gravação de avaliações nem alteração do dataset.
+
+Metodologia, pesos, âncoras de normalização, política temporal, limitações e testes: [docs/risk-methodology.md](docs/risk-methodology.md).
+
+**O motor de risco v1 utiliza regras multicritério experimentais e dados sintéticos. Seus resultados não constituem previsão validada de esgotamento de aquíferos, nem devem fundamentar decisões operacionais reais sem calibração e validação adequadas.**
+
+
+## Fase 9 — Priorização territorial, alertas e recomendações
+
+Implementados: dashboard, mapa, consulta de poços/setores, histórico, indicadores, motor multicritério, ranking territorial, central `/alerts` e recomendações nos detalhes. Todas as avaliações vêm da API. A data selecionada acompanha os links para detalhes e atualiza indicadores, risco e recomendações.
+
+| Endpoint de leitura | Contrato / filtros |
+| --- | --- |
+| `GET /api/v1/risks/wells` | `reference_date`, `classification`, `sector_id`, `municipality`, `page`, `page_size` |
+| `GET /api/v1/alerts` | Os mesmos filtros; alertas derivados sem persistência |
+| `GET /api/v1/wells/{id}/recommendations` | `reference_date`; retorna `risk`, `rules_version` e `recommendations` |
+| `GET /api/v1/wells/{id}/risk` | Contrato individual preservado; `reference_date` |
+
+Ranking: CRITICAL → HIGH → ATTENTION → NORMAL, scores decrescentes por classe e empate por código/UUID. INSUFFICIENT_DATA aparece ao final como não avaliado, com score/classificação nulos. As coleções retornam paginação e uma referência comum; ranking também retorna distribuição e contagens sobre todos os resultados filtrados, antes da paginação. Sem data, usa a última medição subterrânea/operacional de origem compatível no catálogo. O serviço faz até oito consultas em lote e lê somente 60 dias de medições necessários aos critérios v1. A API individual mantém sua política anterior de data automática por poço.
+
+### Alertas
+
+HIGH e CRITICAL geram alertas de investigação; INSUFFICIENT_DATA gera alerta separado de qualidade de dados. NORMAL e ATTENTION não geram alertas nesta versão. IDs combinam poço, data, versão do risco e tipo. Consultas são somente leitura, não duplicam linhas nem alteram alertas operacionais em consultas históricas. O model `Alert` existente permanece reservado para um ciclo persistido futuro; não há migrations novas.
+
+### Recomendações
+
+Regras `investigation-v1.0.0`, determinísticas e baseadas em evidências AVAILABLE e finitas:
+
+- STATIC_TREND: tendência da profundidade estática em 30 dias > 0 m/dia; conferir medições, histórico e condições de bombeamento.
+- RAINFALL_DEFICIT: déficit relativo recente > 0,30; acompanhar medições e avaliar fontes alternativas cadastradas. Não demonstra perda de recarga nem causalidade.
+- PUMPING_LOAD: média de horas em 30 dias > 16 h/dia; revisão humana do regime e inspeção. Mede carga média, não aumento persistente.
+- DEMAND_PRESSURE: variação relativa de demanda > 0,20; conferir produção/demanda e pressão operacional.
+- RECENT_FAILURES: dias com falha em 30 dias > 0; revisar registros e avaliar manutenção preventiva.
+- DATA_COVERAGE: avaliação insuficiente; revisar atualização, integridade, unidades e proveniência.
+
+Sugestões podem usar um indicador válido mesmo quando outros grupos impedem o score global; a evidência e a insuficiência permanecem explícitas. Cada regra traz justificativa e valores com unidades. São orientações para avaliação humana; não ordenam alteração de bombeamento, ativação de reserva ou perfuração.
+
+### Limitações científicas e próximas fases
+
+O MVP **não demonstra capacidade preditiva validada**. Índice 0–100 não é probabilidade; cobertura não é confiança preditiva. Dados sintéticos e parâmetros experimentais exigem validação técnica antes de aplicação operacional. Não há snapshots, reconhecimento/encerramento de alertas ou notificações externas. Ranking recalcula sob demanda; escala maior exigirá agregação SQL/cache com invalidação e revisão científica.
+
+Próximas fases: cenários experimentais 30/60/90 dias; SIAGAS; RIMAS; integração climática; validação histórica; avaliação de custo-benefício; camada sanitária mediante dados apropriados; modelos estatísticos/ML após verificar disponibilidade de dados reais.
+
+Consulte [contratos e arquitetura da fase 9](docs/prioritization.md) e [registro de validação](docs/validation.md).

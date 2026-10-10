@@ -2,7 +2,7 @@
 
 O modelo usa PostgreSQL com PostGIS, SQLAlchemy 2 para o mapeamento ORM e Alembic para evolução do schema. Todas as entidades têm `id` UUID, `created_at` e `updated_at` com fuso horário. As geometrias usam WGS 84 (`SRID 4326`), com longitude antes da latitude nos contratos GeoJSON.
 
-Os models ORM ficam em `backend/app/models`; os contratos Pydantic de criação e leitura ficam separados em `backend/app/schemas`. Esta etapa somente persiste avaliações, fatores e alertas. Ela não calcula risco nem define um motor de risco.
+Os models ORM ficam em `backend/app/models`; os contratos Pydantic de criação e leitura ficam separados em `backend/app/schemas`. O schema inclui tabelas para avaliações, fatores e alertas. O motor atual calcula sob demanda e não grava nessas tabelas.
 
 As três tabelas de medições possuem `data_classification` obrigatório (`REAL`, `PUBLIC` ou `SIMULATED`). Os schemas Pydantic internos e a API normal aceitam todas essas origens, sempre exibindo a classificação. A resposta deriva `is_synthetic` dessa classificação. O simulador normaliza seu dataset nos mesmos schemas antes de gravar.
 
@@ -42,7 +42,7 @@ Representa uma área operacional de abastecimento. Tem código único, nome, des
 
 Persiste o resultado de uma avaliação de risco para um poço. Contém instante, pontuação entre 0 e 100, nível (`low`, `medium`, `high` ou `critical`), versão da metodologia, validade opcional e observações. Uma avaliação agrega seus `RiskFactor` e pode ser referenciada por alertas.
 
-Não há nesta entrega lógica para produzir esses valores; a tabela é o contrato de persistência para uma implementação posterior.
+O motor multicritério produz avaliações transitórias com classificações NORMAL/ATTENTION/HIGH/CRITICAL; esta tabela mantém seu contrato legado de persistência e não é utilizada pelo motor atual.
 
 ### `RiskFactor` (`risk_factors`)
 
