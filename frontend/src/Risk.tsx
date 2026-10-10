@@ -3,7 +3,7 @@ import { RecommendationList, type Recommendation } from './Priorities'
 import { getJson } from './api'
 
 type Factor = { group: string; name: string; status: string; subscore: number | null; weight: number; effective_weight: number | null; contribution: number | null; explanation: string }
-type RiskResponse = { score: number | null; status: string; classification: 'NORMAL' | 'ATTENTION' | 'HIGH' | 'CRITICAL' | null; reference_date: string | null; coverage: number; minimum_coverage: number; model_version: string; data_classification: string; source: string | null; factors: Factor[]; unavailable_groups: string[] }
+export type RiskResponse = { score: number | null; status: string; classification: 'NORMAL' | 'ATTENTION' | 'HIGH' | 'CRITICAL' | null; reference_date: string | null; coverage: number; minimum_coverage: number; model_version: string; data_classification: string; source: string | null; factors: Factor[]; unavailable_groups: string[] }
 const labels = { NORMAL: 'Normal', ATTENTION: 'Atenção', HIGH: 'Alta prioridade', CRITICAL: 'Prioridade crítica' }
 const fmt = (value: number | null) => value == null ? '—' : value.toLocaleString('pt-BR', { maximumFractionDigits: 2 })
 
@@ -30,6 +30,6 @@ export function Risk({ wellId, referenceDate }: { wellId: string; referenceDate:
       {query.data.data_classification === 'SIMULATED' && <p>Esta avaliação utiliza dados simulados.</p>}
     </>}
     {query.data && <RecommendationList items={query.data.recommendations} />}
-    <p>Os pesos e limites são experimentais e não estão validados. O índice não é probabilidade de colapso nem previsão de esgotamento; não fundamenta decisões operacionais reais sem calibração e validação.</p>
+    <details><summary>Metodologia da avaliação</summary><p>O motor normaliza indicadores em subscores entre 0 e 100 e combina os grupos pelos pesos exibidos. Dados ausentes não são tratados como zero. Exige cobertura ponderada mínima de 80% e grupo subterrâneo válido; grupos ausentes são informados, e pesos efetivos refletem os grupos disponíveis.</p><p>Déficit de chuva compara janelas adjacentes de 30 dias. Tendências descrevem o histórico; níveis mais profundos usam valores maiores na referência sintética. O índice não demonstra causalidade.</p><p>Classificação v1: Normal abaixo de 40; Atenção de 40 até menos de 60; Alta de 60 até menos de 80; Crítica a partir de 80. Versão efetiva: {query.data?.model_version || 'indisponível'}.</p></details><p>Os pesos e limites são experimentais e não estão validados. O índice não é probabilidade de colapso nem previsão de esgotamento; não fundamenta decisões operacionais reais sem calibração e validação.</p>
   </section>
 }

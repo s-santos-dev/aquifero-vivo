@@ -24,7 +24,7 @@ def test_first_api_routes_are_exposed_in_openapi():
 
 def test_collection_routes_document_pagination_and_filters():
     well_parameters = _parameters("/api/v1/wells")
-    assert {"page", "page_size", "q", "municipality", "sector_id", "state", "is_active"} == set(
+    assert {"page", "page_size", "q", "municipality", "sector_id", "state", "is_active", "source"} == set(
         well_parameters
     )
     assert well_parameters["page_size"]["schema"]["maximum"] == 100

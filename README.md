@@ -1,8 +1,69 @@
 # Aquífero Vivo
 
+## Centro de Decisões Hídricas — entregas A + B
+
+A entrada principal agora é [Centro de Decisões](http://localhost:5173/decisions): **onde investigar, por que investigar e o que considerar fazer**. Reutiliza ranking/mapa e recomendações existentes, com busca, filtros preservados na URL, separação de fontes, modos simples/técnico, dicionário acessível e comparação de períodos compatíveis.
+
+A [Demonstração de Decisão](http://localhost:5173/demo/decisao) tem cinco etapas, parâmetros editáveis para duas alternativas e resumo para copiar/imprimir. Usa o simulador existente, sem gravar decisões ou misturar dados públicos e sintéticos. Com a base pronta, execute `docker compose up -d db backend frontend`, sem seed/reset. Guia, endpoints, arquivos, validação, limitações e roteiro: [docs/decision-center.md](docs/decision-center.md).
+
+## Demonstração — Decisão Preventiva
+
+Registro da implementação anterior; o fluxo e a validação atuais estão em [Centro de Decisões](docs/decision-center.md).
+
+Acesse [a demonstração guiada](http://localhost:5173/demo/decisao) pelo menu **Decisão Preventiva**. O fluxo reutiliza o simulador e o motor existentes: indicadores → cenário editável → fatores → sugestões de investigação → alternativa de demanda → resumo demonstrativo para copiar/imprimir. Inclui acesso separado à RETE/RIMAS e precipitação regional INMET, sem produzir score operacional com essas fontes.
+
+Com o banco preparado, execute `docker compose up -d db backend frontend`; não execute seed/reset. Funciona com a API e o banco locais, sem internet. Relatório, endpoints, arquivos, evidências, limitações e roteiro de três minutos: [docs/decision-demo.md](docs/decision-demo.md).
+
+## Precipitação pública INMET (Fase 13)
+
+Piloto real: **A237/Caxias–MA, 01/01–31/03/2025, 2.160 observações horárias em mm, 90 dias UTC completos, zero rejeições**. A312/Teresina está sem valores de chuva no arquivo consultado. Caxias está a **67,17 km da RETE**: comparação territorial exploratória, sem atribuição da chuva ao poço ou ao risco. As **131.400 medições sintéticas, 91 observações RIMAS, 80 poços sintéticos, 26 SIAGAS, 20 setores e 80 vínculos** foram preservados com checksums.
+
+Nos detalhes da RETE, a seção **Precipitação próxima — dados públicos** apresenta estação, origem, distância, período, cobertura, gráfico Recharts, seleção temporal e dias ausentes. Diários exigem 24 intervalos horários; ausência não vira zero. API paginada em `/api/v1/climate/stations`, `/{id}/rainfall`, `/{id}/indicators` e `/api/v1/wells/{id}/nearby-climate`. Migrations 0007/0008 criam uma estrutura climática independente.
+
+```sh
+# ZIP baixado pelo mecanismo normal de https://portal.inmet.gov.br/dadoshistoricos/
+docker compose exec -T backend python -m app.ingestion.climate.cli --station A237 --from 2025-01-01 --to 2025-03-31 --file /data/raw/climate/research/2025.zip --load
+```
+
+Sem `--load`, apenas preserva e valida. Métodos, investigação de fontes, formatos, regras diárias, comandos de reimportação, exemplos reais, testes e limitações científicas em [docs/climate-integration.md](docs/climate-integration.md).
+
+## Dados públicos SIAGAS/SGB (Fase 11)
+
+Piloto validado localmente em 10/10/2026: **25 poços reais de Teresina/PI**, consultados pelo serviço oficial ArcGIS e persistidos no PostGIS. Reimportação: zero duplicatas. Os **80 poços simulados, 20 setores e 131.400 medições** foram preservados com checksums de conteúdo. Veja comandos, mapeamento, limites e relatório em [docs/siagas-integration.md](docs/siagas-integration.md) e [docs/siagas-validation.md](docs/siagas-validation.md).
+
+No [mapa](http://localhost:5173/map), escolha Origem → Todos os poços, Poços simulados ou Poços públicos SIAGAS. Cadastros públicos usam marcadores roxos quadrados e apresentam fonte, aquífero, profundidade e datas disponíveis nos detalhes. Não há associação automática a setores, séries fictícias ou scores operacionais: `PUBLIC`, `source=SIAGAS`, `is_synthetic=false`, operação desconhecida (`is_active=null`). A API preserva as rotas, acrescenta `source` em `/api/v1/wells` e proveniência cadastral opcional. Clientes devem aceitar status nulo como desconhecido.
+
+```sh
+docker compose up -d backend frontend
+docker compose exec -T backend python -m app.ingestion.siagas.cli --municipality Teresina --limit 25 --page-size 10 --raw-dir /data/raw/siagas --processed-dir /data/processed/siagas --load
+```
+
+Sem `--load`, apenas extrai e valida. A Visão Geral distingue cadastros públicos, simulados e poços avaliáveis. **Cadastro SIAGAS não confirma operação atual nem monitoramento por concessionária.**
+
+## Simulador de Cenários (Fase 10)
+
+Acesse [Simulador de Cenários](http://localhost:5173/simulator) pelo menu lateral. Busque um poço, selecione uma data histórica (ou deixe em branco para a última medição), consulte a referência e ajuste precipitação, demanda e bombeamento entre -100% e +100%. Clique em **Simular** para comparar referência, cenário escolhido, condições favoráveis e estresse severo em 30, 60 e 90 dias. Os presets são demonstrativos e editáveis; **Restaurar parâmetros** retorna os controles a zero e limpa os resultados.
+
+O backend reutiliza o motor multicritério existente sobre cópias temporárias dos indicadores. A progressão é 1/3, 2/3 e 1 da alteração final, com horas limitadas a 24 por dia. O gráfico e a tabela exibem índices e diferenças em pontos; os fatores explicam as mudanças efetivamente calculadas. Ausência de dados e saturação não são transformadas em diferenças fictícias. Nenhuma medição ou avaliação real é gravada.
+
+`GET /api/v1/scenarios/config` expõe limites e presets. Exemplo para `POST /api/v1/scenarios/simulate` (use um UUID existente retornado por `/api/v1/wells`):
+
+```json
+{
+  "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+  "reference_date": "2025-12-30",
+  "rainfall_change_pct": -20,
+  "demand_change_pct": 15,
+  "pumping_change_pct": 10,
+  "horizons": [30, 60, 90]
+}
+```
+
+**Os resultados são simulações exploratórias produzidas a partir de indicadores e parâmetros experimentais. Não constituem previsão hidrogeológica validada nem recomendação operacional automática.** Níveis, drawdown, vazão e falhas permanecem constantes; utilização não representa capacidade hidráulica. Veja fórmulas, tratamento de insuficiência, arquitetura e limitações em [docs/scenario-methodology.md](docs/scenario-methodology.md), e resultados dos testes em [docs/scenario-validation.md](docs/scenario-validation.md).
+
 Plataforma web de inteligência hídrica experimental para análise de risco de estresse hídrico em poços e sistemas de abastecimento.
 
-Esta entrega contém a base do projeto, uma primeira API de consulta, o modelo inicial de persistência hidrogeológica e operacional e um gerador de dados operacionais sintéticos. Implementa indicadores e motor multicritério experimental; não implementa ML ou SIAGAS.
+Esta entrega contém a base do projeto, uma primeira API de consulta, o modelo inicial de persistência hidrogeológica e operacional e um gerador de dados operacionais sintéticos. Implementa indicadores e motor multicritério experimental; não implementa ML. A Fase 11 integra cadastros públicos SIAGAS.
 
 ## Estrutura
 
@@ -54,7 +115,7 @@ Os endpoints de coleção aceitam `page` (padrão `1`) e `page_size` (padrão `2
 
 | Endpoint | Filtros |
 | --- | --- |
-| `GET /api/v1/wells` | `q`, `municipality`, `sector_id`, `state`, `is_active` |
+| `GET /api/v1/wells` | `q`, `municipality`, `sector_id`, `state`, `is_active`, `source` |
 | `GET /api/v1/wells/{id}` | — |
 | `GET /api/v1/sectors` | `q` |
 | `GET /api/v1/sectors/{id}` | — |
@@ -183,7 +244,7 @@ SIMULATION_MAX_LONGITUDE=-42.60
 
 A área padrão é uma caixa de demonstração no Piauí, dividida em faixas por setor, sem correspondência com poços ou áreas reais de atendimento. Os códigos são `SIM-PI-001`, etc.; setores usam `SIM-SEC-001`. Coordenadas GeoJSON estão em **longitude, latitude**, SRID 4326; o Leaflet converte para latitude, longitude. O início padrão é `2024-01-01`, configurável por `--start-date YYYY-MM-DD`. A mesma seed, configuração e versão do gerador reproduzem os valores e UUIDs; timestamps de auditoria do banco refletem cada gravação.
 
-`DATA_MODE` aceita `SIMULATED`, `PUBLIC` e `HYBRID` como configuração preparatória, sem escolher um endpoint diferente ou esconder proveniência. Somente o carregamento `SIMULATED` está implementado; mudar a variável não importa dados públicos.
+`DATA_MODE` aceita `SIMULATED`, `PUBLIC` e `HYBRID` como configuração preparatória, sem escolher um endpoint diferente ou esconder proveniência. O carregamento sintético e a ingestão SIAGAS estão implementados em comandos explícitos; mudar a variável não importa dados.
 
 ### Como gerar os dados e escolher o cenário
 
@@ -290,10 +351,10 @@ Na interface, selecione um poço no mapa ou na lista e use a seção **Indicador
 - [x] Detalhes do poço, indicadores e histórico por data
 - [x] Indicadores hidroclimáticos e operacionais
 - [x] Setores e detalhes com indicadores agregados e poços vinculados
-- [ ] Motor de risco
-- [ ] Alertas inteligentes
-- [ ] Cenários 30/60/90
-- [ ] Integração SIAGAS
+- [x] Motor de risco
+- [x] Alertas e recomendações determinísticas
+- [x] Cenários exploratórios 30/60/90
+- [x] Integração cadastral SIAGAS — piloto de 25 poços
 
 ## Rotas do frontend
 
@@ -306,7 +367,7 @@ Na interface, selecione um poço no mapa ou na lista e use a seção **Indicador
 
 ## Limitações metodológicas
 
-O conjunto operacional atual é sintético. Os indicadores são métricas descritivas, não previsões validadas nem classificações de risco. As janelas de 30/60/90 dias são períodos analíticos retrospectivos, não cenários futuros. O déficit de chuva compara dois períodos consecutivos do próprio histórico; climatologia de longo prazo ainda não foi integrada. Dados públicos reais, incluindo SIAGAS, RIMAS e fontes climáticas, serão tratados em fases posteriores. Não utilize estes resultados em decisões operacionais reais.
+O conjunto operacional atual é sintético. Os indicadores são métricas descritivas; o índice multicritério experimental não é uma previsão validada. As janelas de 30/60/90 dias são períodos analíticos retrospectivos, não cenários futuros. O déficit de chuva compara dois períodos consecutivos do próprio histórico; climatologia de longo prazo ainda não foi integrada. Cadastros SIAGAS foram integrados na Fase 11; um piloto de observações RIMAS foi integrado na Fase 12. Fontes climáticas reais permanecem para fases posteriores. Os cadastros públicos sem séries não recebem índices operacionais. Não utilize estes resultados em decisões operacionais reais.
 
 # Fase 8 — Risco multicritério explicável
 
@@ -354,3 +415,24 @@ O MVP **não demonstra capacidade preditiva validada**. Índice 0–100 não é 
 Próximas fases: cenários experimentais 30/60/90 dias; SIAGAS; RIMAS; integração climática; validação histórica; avaliação de custo-benefício; camada sanitária mediante dados apropriados; modelos estatísticos/ML após verificar disponibilidade de dados reais.
 
 Consulte [contratos e arquitetura da fase 9](docs/prioritization.md) e [registro de validação](docs/validation.md).
+
+
+## Fase 12 — séries reais RIMAS/SGB
+
+Piloto operacional: **91 observações oficiais da estação RETE, Teresina/PI (idt_ponto 2200034952), de 01/01/2025 a 31/03/2025**. Foram encontrados 28 cadastros RIMAS no Piauí; uma série foi verificada para o piloto, e as outras 27 não foram avaliadas temporalmente. A aquisição usa a exportação CSV oficial do portal, com arquivos originais, checksum e proveniência preservados.
+
+O banco agora contém **106 poços (80 sintéticos + 26 SIAGAS), 20 setores, 80 vínculos, 131.400 medições sintéticas intactas e 91 observações RIMAS separadas**. A repetição da carga cria zero registros e preserva as observações existentes.
+
+A migration 0006 cria `groundwater_observations`, separada dos insumos de indicadores. As observações preservam data/hora original sem fuso inventado, unidade em metros, sequência e bombeamento. Não há consolidação diária, interpolação ou atribuição automática de nível estático. Referência, fuso e qualidade não confirmados mantêm a série fora dos indicadores e do risco, que retorna dados insuficientes.
+
+Na lista e no mapa, selecione **Estações com série RIMAS** e abra os detalhes de RETE. O histórico real apresenta gráfico de pontos, filtro por data, tabela paginada, bombeamento e origem. Medições anteriores continuam usando seus contratos e fontes. A API existente aceita `GET /api/v1/measurements?type=groundwater&source=RIMAS&well_id=...&measured_from=2025-01-01T00:00:00&measured_to=2025-03-31T23:59:59&page_size=100`; o valor real fica em `observed_level_m`, sem substituir `water_level_m`.
+
+```powershell
+# Aquisição + validação, sem escrita por padrão
+docker compose exec -T backend python -m app.ingestion.rimas.cli --station 2200034952 --from 2025-01-01 --to 2025-03-31
+# Acrescente --load para carga transacional
+# Repetir o lote efetivamente preservado, sem acessar a rede
+docker compose exec -T backend python -m app.ingestion.rimas.cli --batch /data/raw/rimas/20261010T165320Z-a225b869 --load
+```
+
+Validação: 192 testes aprovados incluindo PostGIS, build TypeScript/Vite, Alembic check e Compose config aprovados; conteúdo anterior comparado por SHA-256; série real conferida no navegador. Serviços, cobertura, campos, política temporal, condições de uso, comandos e limitações: [documentação RIMAS](docs/rimas-integration.md). Evidências: [relatório](output/rimas-validation.json), [antes](output/rimas-before.json), [depois](output/rimas-after.json), [captura do histórico](output/rimas-frontend.png).

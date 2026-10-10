@@ -49,7 +49,7 @@ class WellBase(CatalogProvenance):
     municipality: str | None = Field(default=None, max_length=120)
     state: str | None = Field(default=None, min_length=2, max_length=2)
     depth_m: Decimal | None = Field(default=None, ge=0)
-    is_active: bool = True
+    is_active: bool | None = True
 
 
 class WellCreate(WellBase):

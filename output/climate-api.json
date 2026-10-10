@@ -1,0 +1,287 @@
+{
+  "station": {
+    "id": "62d9510e-a8f3-5f7b-88be-453fe8e1aca4",
+    "official_code": "A237",
+    "name": "CAXIAS",
+    "source": "INMET",
+    "observation_type": "STATION_OBSERVATION",
+    "latitude": -4.82138888,
+    "longitude": -43.3436111,
+    "spatial_reference": "EPSG:4326",
+    "data_classification": "PUBLIC",
+    "is_synthetic": false,
+    "timezone": "UTC",
+    "unit": "mm",
+    "frequency": "hourly_previous_interval",
+    "period": {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "first_timestamp": "2025-01-01T01:00:00+00:00",
+      "last_timestamp": "2025-04-01T00:00:00+00:00"
+    },
+    "coverage": {
+      "records": 2160,
+      "observed_hours": 2160,
+      "expected_hours": 2160,
+      "missing_values": 0,
+      "absent_hours": 0,
+      "observed_fraction": 1.0
+    },
+    "quality_status": "NOT_PROVIDED",
+    "source_metadata": {
+      "end": "2025-03-31",
+      "unit": "mm",
+      "batch": "20261010T171834Z-02a03add",
+      "start": "2025-01-01",
+      "state": "MA",
+      "format": "INMET_ANNUAL_AUTOMATIC_CSV",
+      "source": "INMET",
+      "request": {
+        "url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+        "method": "GET"
+      },
+      "station": "A237",
+      "interval": "previous_hour",
+      "timezone": "UTC",
+      "raw_sha256": "439fce282060d45d44b1101c39f25ea3b88e79eb9c68dfa0378410d5428c3e26",
+      "source_url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+      "acquisition": "official_browser_download",
+      "extracted_at": "2026-10-10T17:18:34.874668+00:00",
+      "archive_member": "2025/INMET_NE_MA_A237_CAXIAS_01-01-2025_A_31-12-2025.CSV",
+      "archive_sha256": "14988d0b736ba969b48881589f602f3a6d7e97b95bd1de934456851fdac2cb89",
+      "quality_status": "NOT_PROVIDED",
+      "original_header": [
+        [
+          "REGIAO:",
+          "NE"
+        ],
+        [
+          "UF:",
+          "MA"
+        ],
+        [
+          "ESTACAO:",
+          "CAXIAS"
+        ],
+        [
+          "CODIGO (WMO):",
+          "A237"
+        ],
+        [
+          "LATITUDE:",
+          "-4,82138888"
+        ],
+        [
+          "LONGITUDE:",
+          "-43,3436111"
+        ],
+        [
+          "ALTITUDE:",
+          "84,85"
+        ],
+        [
+          "DATA DE FUNDACAO:",
+          "13/07/08"
+        ],
+        [
+          "Data",
+          "Hora UTC",
+          "PRECIPITAÇÃO TOTAL, HORÁRIO (mm)",
+          "PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)",
+          "PRESSÃO ATMOSFERICA MAX.NA HORA ANT. (AUT) (mB)",
+          "PRESSÃO ATMOSFERICA MIN. NA HORA ANT. (AUT) (mB)",
+          "RADIACAO GLOBAL (Kj/m²)",
+          "TEMPERATURA DO AR - BULBO SECO, HORARIA (°C)",
+          "TEMPERATURA DO PONTO DE ORVALHO (°C)",
+          "TEMPERATURA MÁXIMA NA HORA ANT. (AUT) (°C)",
+          "TEMPERATURA MÍNIMA NA HORA ANT. (AUT) (°C)",
+          "TEMPERATURA ORVALHO MAX. NA HORA ANT. (AUT) (°C)",
+          "TEMPERATURA ORVALHO MIN. NA HORA ANT. (AUT) (°C)",
+          "UMIDADE REL. MAX. NA HORA ANT. (AUT) (%)",
+          "UMIDADE REL. MIN. NA HORA ANT. (AUT) (%)",
+          "UMIDADE RELATIVA DO AR, HORARIA (%)",
+          "VENTO, DIREÇÃO HORARIA (gr) (° (gr))",
+          "VENTO, RAJADA MAXIMA (m/s)",
+          "VENTO, VELOCIDADE HORARIA (m/s)",
+          ""
+        ]
+      ],
+      "response_headers": {},
+      "eligible_for_risk": false,
+      "spatial_reference": "EPSG:4326",
+      "spatial_reference_note": "Coordenadas geográficas publicadas; datum original não declarado no CSV"
+    },
+    "eligible_for_risk": false
+  },
+  "nearby": {
+    "items": [
+      {
+        "id": "62d9510e-a8f3-5f7b-88be-453fe8e1aca4",
+        "official_code": "A237",
+        "name": "CAXIAS",
+        "source": "INMET",
+        "observation_type": "STATION_OBSERVATION",
+        "latitude": -4.82138888,
+        "longitude": -43.3436111,
+        "spatial_reference": "EPSG:4326",
+        "data_classification": "PUBLIC",
+        "is_synthetic": false,
+        "timezone": "UTC",
+        "unit": "mm",
+        "frequency": "hourly_previous_interval",
+        "period": {
+          "start": "2025-01-01",
+          "end": "2025-03-31",
+          "first_timestamp": "2025-01-01T01:00:00+00:00",
+          "last_timestamp": "2025-04-01T00:00:00+00:00"
+        },
+        "coverage": {
+          "records": 2160,
+          "observed_hours": 2160,
+          "expected_hours": 2160,
+          "missing_values": 0,
+          "absent_hours": 0,
+          "observed_fraction": 1.0
+        },
+        "quality_status": "NOT_PROVIDED",
+        "source_metadata": {
+          "end": "2025-03-31",
+          "unit": "mm",
+          "batch": "20261010T171834Z-02a03add",
+          "start": "2025-01-01",
+          "state": "MA",
+          "format": "INMET_ANNUAL_AUTOMATIC_CSV",
+          "source": "INMET",
+          "request": {
+            "url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+            "method": "GET"
+          },
+          "station": "A237",
+          "interval": "previous_hour",
+          "timezone": "UTC",
+          "raw_sha256": "439fce282060d45d44b1101c39f25ea3b88e79eb9c68dfa0378410d5428c3e26",
+          "source_url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+          "acquisition": "official_browser_download",
+          "extracted_at": "2026-10-10T17:18:34.874668+00:00",
+          "archive_member": "2025/INMET_NE_MA_A237_CAXIAS_01-01-2025_A_31-12-2025.CSV",
+          "archive_sha256": "14988d0b736ba969b48881589f602f3a6d7e97b95bd1de934456851fdac2cb89",
+          "quality_status": "NOT_PROVIDED",
+          "original_header": [
+            [
+              "REGIAO:",
+              "NE"
+            ],
+            [
+              "UF:",
+              "MA"
+            ],
+            [
+              "ESTACAO:",
+              "CAXIAS"
+            ],
+            [
+              "CODIGO (WMO):",
+              "A237"
+            ],
+            [
+              "LATITUDE:",
+              "-4,82138888"
+            ],
+            [
+              "LONGITUDE:",
+              "-43,3436111"
+            ],
+            [
+              "ALTITUDE:",
+              "84,85"
+            ],
+            [
+              "DATA DE FUNDACAO:",
+              "13/07/08"
+            ],
+            [
+              "Data",
+              "Hora UTC",
+              "PRECIPITAÇÃO TOTAL, HORÁRIO (mm)",
+              "PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)",
+              "PRESSÃO ATMOSFERICA MAX.NA HORA ANT. (AUT) (mB)",
+              "PRESSÃO ATMOSFERICA MIN. NA HORA ANT. (AUT) (mB)",
+              "RADIACAO GLOBAL (Kj/m²)",
+              "TEMPERATURA DO AR - BULBO SECO, HORARIA (°C)",
+              "TEMPERATURA DO PONTO DE ORVALHO (°C)",
+              "TEMPERATURA MÁXIMA NA HORA ANT. (AUT) (°C)",
+              "TEMPERATURA MÍNIMA NA HORA ANT. (AUT) (°C)",
+              "TEMPERATURA ORVALHO MAX. NA HORA ANT. (AUT) (°C)",
+              "TEMPERATURA ORVALHO MIN. NA HORA ANT. (AUT) (°C)",
+              "UMIDADE REL. MAX. NA HORA ANT. (AUT) (%)",
+              "UMIDADE REL. MIN. NA HORA ANT. (AUT) (%)",
+              "UMIDADE RELATIVA DO AR, HORARIA (%)",
+              "VENTO, DIREÇÃO HORARIA (gr) (° (gr))",
+              "VENTO, RAJADA MAXIMA (m/s)",
+              "VENTO, VELOCIDADE HORARIA (m/s)",
+              ""
+            ]
+          ],
+          "response_headers": {},
+          "eligible_for_risk": false,
+          "spatial_reference": "EPSG:4326",
+          "spatial_reference_note": "Coordenadas geográficas publicadas; datum original não declarado no CSV"
+        },
+        "eligible_for_risk": false,
+        "distance_km": 67.170592246,
+        "distance_method": "PostGIS ST_Distance geography, WGS84 spheroid",
+        "requested_coverage": {
+          "start": "2025-01-01",
+          "end": "2025-03-31",
+          "expected_days": 90,
+          "complete_days": 90
+        }
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "page_size": 20,
+    "pages": 1,
+    "notice": "Proximidade territorial para comparação; não representa chuva no poço nem causalidade. Fuso RIMAS permanece desconhecido."
+  },
+  "indicators": {
+    "reference_date": "2025-03-31",
+    "timezone": "UTC",
+    "aggregation_rule": "INMET_PREVIOUS_HOUR_24_INTERVALS_UTC_V1",
+    "accumulations": {
+      "7": {
+        "value_mm": "2.0000",
+        "status": "AVAILABLE",
+        "expected_days": 7,
+        "complete_days": 7,
+        "unit": "mm",
+        "quality_status": "NOT_PROVIDED"
+      },
+      "30": {
+        "value_mm": "360.0000",
+        "status": "AVAILABLE",
+        "expected_days": 30,
+        "complete_days": 30,
+        "unit": "mm",
+        "quality_status": "NOT_PROVIDED"
+      },
+      "60": {
+        "value_mm": "503.0000",
+        "status": "AVAILABLE",
+        "expected_days": 60,
+        "complete_days": 60,
+        "unit": "mm",
+        "quality_status": "NOT_PROVIDED"
+      },
+      "90": {
+        "value_mm": "683.2000",
+        "status": "AVAILABLE",
+        "expected_days": 90,
+        "complete_days": 90,
+        "unit": "mm",
+        "quality_status": "NOT_PROVIDED"
+      }
+    },
+    "notice": "Indicadores descritivos; não são normal climatológica, seca oficial ou recarga."
+  }
+}

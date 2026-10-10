@@ -1,0 +1,37 @@
+{
+  "report_file": "/data/processed/climate/20261010T172306Z-b0d480ad-81013b4f.json",
+  "station": "A312",
+  "batch": "20261010T172306Z-b0d480ad",
+  "start": "2025-01-01",
+  "end": "2025-03-31",
+  "accepted": 2160,
+  "observed": 0,
+  "missing_values": 2160,
+  "absent_or_rejected_intervals": 0,
+  "duplicates": 0,
+  "rejected": [],
+  "complete_days": 0,
+  "expected_days": 90,
+  "provenance": {
+    "batch": "20261010T172306Z-b0d480ad",
+    "extracted_at": "2026-10-10T17:23:06.324987+00:00",
+    "source": "INMET",
+    "station": "A312",
+    "start": "2025-01-01",
+    "end": "2025-03-31",
+    "source_url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+    "request": {
+      "method": "GET",
+      "url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip"
+    },
+    "response_headers": {},
+    "acquisition": "official_browser_download",
+    "archive_member": "2025/INMET_NE_PI_A312_TERESINA_01-01-2025_A_31-12-2025.CSV",
+    "archive_sha256": "14988d0b736ba969b48881589f602f3a6d7e97b95bd1de934456851fdac2cb89",
+    "raw_sha256": "ce85c80ee728f6fe6a9757fc53493bab392ace557cd7cddd8e4c94b2f9fa68ec",
+    "timezone": "UTC",
+    "unit": "mm",
+    "interval": "previous_hour",
+    "format": "INMET_ANNUAL_AUTOMATIC_CSV"
+  }
+}

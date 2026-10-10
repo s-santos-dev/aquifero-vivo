@@ -1,0 +1,2680 @@
+{
+  "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+  "well_code": "SIM-PI-001",
+  "reference_date": "2025-12-30",
+  "data_classification": "SIMULATED",
+  "source": "SIMULATED:AQUIFERO_VIVO",
+  "simulation_version": "sensitivity-v1.0.0",
+  "nature": "HYPOTHETICAL_SENSITIVITY",
+  "parameters": {
+    "rainfall_change_pct": -30.0,
+    "demand_change_pct": 20.0,
+    "pumping_change_pct": 10.0,
+    "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+    "reference_date": null,
+    "horizons": [
+      30,
+      60,
+      90
+    ]
+  },
+  "baseline": {
+    "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+    "well_code": "SIM-PI-001",
+    "reference_date": "2025-12-30",
+    "data_classification": "SIMULATED",
+    "source": "SIMULATED:AQUIFERO_VIVO",
+    "model_version": "multicriteria-v1.0.0",
+    "experimental": true,
+    "score": 20.2796,
+    "status": "AVAILABLE",
+    "classification": "NORMAL",
+    "coverage": 1.0,
+    "minimum_coverage": 0.8,
+    "subscores": {
+      "pumping": 100.0,
+      "demand": 1.1280000000000001,
+      "groundwater": 0.17999999999999997,
+      "rainfall": 0.0,
+      "operations": 0.0
+    },
+    "factors": [
+      {
+        "group": "pumping",
+        "name": "Pressão de bombeamento",
+        "status": "AVAILABLE",
+        "indicators": [
+          {
+            "section": "operations",
+            "indicator": "pumping_hours_avg_30d",
+            "value": 24.0,
+            "unit": "h/dia",
+            "status": "AVAILABLE",
+            "normalized": 100.0
+          },
+          {
+            "section": "operations",
+            "indicator": "utilization_avg_30d",
+            "value": 1.10692,
+            "unit": "fração",
+            "status": "AVAILABLE",
+            "normalized": 100.0
+          }
+        ],
+        "subscore": 100.0,
+        "weight": 0.2,
+        "effective_weight": 0.2,
+        "contribution": 20.0,
+        "explanation": "Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.10692 fração → 100.00/100). Escala experimental."
+      },
+      {
+        "group": "demand",
+        "name": "Pressão de demanda",
+        "status": "AVAILABLE",
+        "indicators": [
+          {
+            "section": "operations",
+            "indicator": "demand_pressure_30d",
+            "value": 0.00564,
+            "unit": "fração",
+            "status": "AVAILABLE",
+            "normalized": 1.1280000000000001
+          }
+        ],
+        "subscore": 1.1280000000000001,
+        "weight": 0.2,
+        "effective_weight": 0.2,
+        "contribution": 0.22560000000000002,
+        "explanation": "Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.00564 fração → 1.13/100). Escala experimental."
+      },
+      {
+        "group": "groundwater",
+        "name": "Estresse subterrâneo",
+        "status": "AVAILABLE",
+        "indicators": [
+          {
+            "section": "groundwater",
+            "indicator": "static_level_trend_30d",
+            "value": 0.00054,
+            "unit": "m/dia",
+            "status": "AVAILABLE",
+            "normalized": 0.5399999999999999
+          },
+          {
+            "section": "groundwater",
+            "indicator": "drawdown_trend_30d",
+            "value": -0.00213,
+            "unit": "m/dia",
+            "status": "AVAILABLE",
+            "normalized": 0.0
+          },
+          {
+            "section": "operations",
+            "indicator": "flow_trend_30d",
+            "value": 0.01007,
+            "unit": "m³/h/dia",
+            "status": "AVAILABLE",
+            "normalized": 0.0
+          }
+        ],
+        "subscore": 0.17999999999999997,
+        "weight": 0.3,
+        "effective_weight": 0.3,
+        "contribution": 0.053999999999999986,
+        "explanation": "Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+      },
+      {
+        "group": "rainfall",
+        "name": "Déficit de precipitação",
+        "status": "AVAILABLE",
+        "indicators": [
+          {
+            "section": "rainfall",
+            "indicator": "recent_rainfall_deficit_30d",
+            "value": 0.0,
+            "unit": "fração",
+            "status": "AVAILABLE",
+            "normalized": 0.0
+          }
+        ],
+        "subscore": 0.0,
+        "weight": 0.2,
+        "effective_weight": 0.2,
+        "contribution": 0.0,
+        "explanation": "Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0 fração → 0.00/100). Escala experimental."
+      },
+      {
+        "group": "operations",
+        "name": "Estresse operacional",
+        "status": "AVAILABLE",
+        "indicators": [
+          {
+            "section": "operations",
+            "indicator": "failures_30d",
+            "value": 0.0,
+            "unit": "falhas",
+            "status": "AVAILABLE",
+            "normalized": 0.0
+          }
+        ],
+        "subscore": 0.0,
+        "weight": 0.1,
+        "effective_weight": 0.1,
+        "contribution": 0.0,
+        "explanation": "Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+      }
+    ],
+    "unavailable_groups": []
+  },
+  "baseline_indicators": {
+    "entity_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+    "reference_date": "2025-12-30",
+    "data_classification": "SIMULATED",
+    "source": "SIMULATED:AQUIFERO_VIVO",
+    "sector_id": "a07024ba-88ff-58ce-964e-1fb13591b23c",
+    "groundwater": {
+      "current_static_level": {
+        "value": 34.591,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 1,
+        "required_days": 1
+      },
+      "current_dynamic_level": {
+        "value": 40.836,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 1,
+        "required_days": 1
+      },
+      "current_drawdown": {
+        "value": 6.245,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 1,
+        "required_days": 1
+      },
+      "static_level_change_30d": {
+        "value": 0.23107,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "static_level_trend_30d": {
+        "value": 0.00054,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "dynamic_level_change_30d": {
+        "value": 0.21573,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "dynamic_level_trend_30d": {
+        "value": -0.00158,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "drawdown_avg_30d": {
+        "value": 6.14137,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "static_level_change_60d": {
+        "value": 0.89001,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 120,
+        "required_days": 120
+      },
+      "static_level_trend_60d": {
+        "value": 0.00782,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "dynamic_level_change_60d": {
+        "value": 0.99734,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 120,
+        "required_days": 120
+      },
+      "dynamic_level_trend_60d": {
+        "value": 0.00748,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "drawdown_avg_60d": {
+        "value": 6.14903,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "static_level_change_90d": {
+        "value": 1.35157,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 180,
+        "required_days": 180
+      },
+      "static_level_trend_90d": {
+        "value": 0.01289,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "dynamic_level_change_90d": {
+        "value": 1.57637,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 180,
+        "required_days": 180
+      },
+      "dynamic_level_trend_90d": {
+        "value": 0.01368,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "drawdown_avg_90d": {
+        "value": 6.13151,
+        "status": "AVAILABLE",
+        "unit": "m",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "drawdown_trend_30d": {
+        "value": -0.00213,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "drawdown_trend_90d": {
+        "value": 0.00079,
+        "status": "AVAILABLE",
+        "unit": "m/dia",
+        "observed_days": 90,
+        "required_days": 90
+      }
+    },
+    "rainfall": {
+      "rainfall_7d": {
+        "value": 32.412,
+        "status": "AVAILABLE",
+        "unit": "mm",
+        "observed_days": 7,
+        "required_days": 7
+      },
+      "rainfall_30d": {
+        "value": 100.924,
+        "status": "AVAILABLE",
+        "unit": "mm",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "rainfall_60d": {
+        "value": 173.279,
+        "status": "AVAILABLE",
+        "unit": "mm",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "rainfall_90d": {
+        "value": 199.841,
+        "status": "AVAILABLE",
+        "unit": "mm",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "rainfall_avg_previous_30d": {
+        "value": 2.41183,
+        "status": "AVAILABLE",
+        "unit": "mm/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "rainfall_avg_previous_90d": {
+        "value": 2.9039,
+        "status": "AVAILABLE",
+        "unit": "mm/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "recent_rainfall_deficit_30d": {
+        "value": 0.0,
+        "status": "AVAILABLE",
+        "unit": "fração",
+        "observed_days": 60,
+        "required_days": 60
+      }
+    },
+    "operations": {
+      "current_flow_rate": {
+        "value": 57.838,
+        "status": "AVAILABLE",
+        "unit": "m³/h",
+        "observed_days": 1,
+        "required_days": 1
+      },
+      "current_utilization": {
+        "value": 1.13585,
+        "status": "AVAILABLE",
+        "unit": "fração",
+        "observed_days": 1,
+        "required_days": 1
+      },
+      "flow_avg_7d": {
+        "value": 57.90386,
+        "status": "AVAILABLE",
+        "unit": "m³/h",
+        "observed_days": 7,
+        "required_days": 7
+      },
+      "flow_avg_30d": {
+        "value": 57.57553,
+        "status": "AVAILABLE",
+        "unit": "m³/h",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "flow_avg_90d": {
+        "value": 57.83531,
+        "status": "AVAILABLE",
+        "unit": "m³/h",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "pumping_hours_avg_7d": {
+        "value": 24.0,
+        "status": "AVAILABLE",
+        "unit": "h/dia",
+        "observed_days": 7,
+        "required_days": 7
+      },
+      "pumping_hours_avg_30d": {
+        "value": 24.0,
+        "status": "AVAILABLE",
+        "unit": "h/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "pumping_hours_avg_90d": {
+        "value": 23.79188,
+        "status": "AVAILABLE",
+        "unit": "h/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "pumped_volume_avg_7d": {
+        "value": 1389.691,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 7,
+        "required_days": 7
+      },
+      "pumped_volume_avg_30d": {
+        "value": 1381.81247,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "pumped_volume_avg_90d": {
+        "value": 1375.78234,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "demand_avg_7d": {
+        "value": 1406.91971,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 7,
+        "required_days": 7
+      },
+      "demand_avg_30d": {
+        "value": 1419.64223,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "demand_avg_90d": {
+        "value": 1401.56334,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "utilization_avg_7d": {
+        "value": 1.097,
+        "status": "AVAILABLE",
+        "unit": "fração",
+        "observed_days": 7,
+        "required_days": 7
+      },
+      "utilization_avg_30d": {
+        "value": 1.10692,
+        "status": "AVAILABLE",
+        "unit": "fração",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "utilization_avg_90d": {
+        "value": 1.09282,
+        "status": "AVAILABLE",
+        "unit": "fração",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "flow_change_30d": {
+        "value": -0.2997,
+        "status": "AVAILABLE",
+        "unit": "m³/h",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "flow_trend_30d": {
+        "value": 0.01007,
+        "status": "AVAILABLE",
+        "unit": "m³/h/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "flow_change_90d": {
+        "value": -0.39391,
+        "status": "AVAILABLE",
+        "unit": "m³/h",
+        "observed_days": 180,
+        "required_days": 180
+      },
+      "flow_trend_90d": {
+        "value": -0.00654,
+        "status": "AVAILABLE",
+        "unit": "m³/h/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "demand_change_30d": {
+        "value": 7.96,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "demand_trend_30d": {
+        "value": -1.56353,
+        "status": "AVAILABLE",
+        "unit": "m³/dia/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "demand_change_90d": {
+        "value": 127.99827,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 180,
+        "required_days": 180
+      },
+      "demand_trend_90d": {
+        "value": 0.71643,
+        "status": "AVAILABLE",
+        "unit": "m³/dia/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "pumped_volume_change_30d": {
+        "value": -7.1909,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "pumped_volume_trend_30d": {
+        "value": 0.24179,
+        "status": "AVAILABLE",
+        "unit": "m³/dia/dia",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "pumped_volume_change_90d": {
+        "value": 7.77247,
+        "status": "AVAILABLE",
+        "unit": "m³/dia",
+        "observed_days": 180,
+        "required_days": 180
+      },
+      "pumped_volume_trend_90d": {
+        "value": 0.37908,
+        "status": "AVAILABLE",
+        "unit": "m³/dia/dia",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "demand_pressure_30d": {
+        "value": 0.00564,
+        "status": "AVAILABLE",
+        "unit": "fração",
+        "observed_days": 60,
+        "required_days": 60
+      },
+      "failures_30d": {
+        "value": 0.0,
+        "status": "AVAILABLE",
+        "unit": "falhas",
+        "observed_days": 30,
+        "required_days": 30
+      },
+      "failures_90d": {
+        "value": 1.0,
+        "status": "AVAILABLE",
+        "unit": "falhas",
+        "observed_days": 90,
+        "required_days": 90
+      },
+      "days_since_last_failure": {
+        "value": 74.0,
+        "status": "AVAILABLE",
+        "unit": "dias",
+        "observed_days": 180,
+        "required_days": 1
+      }
+    },
+    "aggregation": {}
+  },
+  "results": [
+    {
+      "horizon": 30,
+      "label": "Índice sob cenário hipotético — 30 dias",
+      "applied_parameters": {
+        "rainfall_change_pct": -10.0,
+        "demand_change_pct": 6.666666666666666,
+        "pumping_change_pct": 3.333333333333333
+      },
+      "risk": {
+        "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+        "well_code": "SIM-PI-001",
+        "reference_date": "2025-12-30",
+        "data_classification": "SIMULATED",
+        "source": "SIMULATED:AQUIFERO_VIVO",
+        "model_version": "multicriteria-v1.0.0",
+        "experimental": true,
+        "score": 22.961306666666665,
+        "status": "AVAILABLE",
+        "classification": "NORMAL",
+        "coverage": 1.0,
+        "minimum_coverage": 0.8,
+        "subscores": {
+          "pumping": 100.0,
+          "demand": 14.536533333333335,
+          "groundwater": 0.17999999999999997,
+          "rainfall": 0.0,
+          "operations": 0.0
+        },
+        "factors": [
+          {
+            "group": "pumping",
+            "name": "Pressão de bombeamento",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "pumping_hours_avg_30d",
+                "value": 24.0,
+                "unit": "h/dia",
+                "status": "AVAILABLE",
+                "normalized": 100.0
+              },
+              {
+                "section": "operations",
+                "indicator": "utilization_avg_30d",
+                "value": 1.1438173333333332,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 100.0
+              }
+            ],
+            "subscore": 100.0,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 20.0,
+            "explanation": "Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.14382 fração → 100.00/100). Escala experimental."
+          },
+          {
+            "group": "demand",
+            "name": "Pressão de demanda",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "demand_pressure_30d",
+                "value": 0.07268266666666667,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 14.536533333333335
+              }
+            ],
+            "subscore": 14.536533333333335,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 2.907306666666667,
+            "explanation": "Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.0726827 fração → 14.54/100). Escala experimental."
+          },
+          {
+            "group": "groundwater",
+            "name": "Estresse subterrâneo",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "groundwater",
+                "indicator": "static_level_trend_30d",
+                "value": 0.00054,
+                "unit": "m/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.5399999999999999
+              },
+              {
+                "section": "groundwater",
+                "indicator": "drawdown_trend_30d",
+                "value": -0.00213,
+                "unit": "m/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              },
+              {
+                "section": "operations",
+                "indicator": "flow_trend_30d",
+                "value": 0.01007,
+                "unit": "m³/h/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.17999999999999997,
+            "weight": 0.3,
+            "effective_weight": 0.3,
+            "contribution": 0.053999999999999986,
+            "explanation": "Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+          },
+          {
+            "group": "rainfall",
+            "name": "Déficit de precipitação",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "rainfall",
+                "indicator": "recent_rainfall_deficit_30d",
+                "value": 0.0,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.0,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 0.0,
+            "explanation": "Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0 fração → 0.00/100). Escala experimental."
+          },
+          {
+            "group": "operations",
+            "name": "Estresse operacional",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "failures_30d",
+                "value": 0.0,
+                "unit": "falhas",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.0,
+            "weight": 0.1,
+            "effective_weight": 0.1,
+            "contribution": 0.0,
+            "explanation": "Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+          }
+        ],
+        "unavailable_groups": []
+      },
+      "indicators": {
+        "entity_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+        "reference_date": "2025-12-30",
+        "data_classification": "SIMULATED",
+        "source": "SIMULATED:AQUIFERO_VIVO",
+        "sector_id": "a07024ba-88ff-58ce-964e-1fb13591b23c",
+        "groundwater": {
+          "current_static_level": {
+            "value": 34.591,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_dynamic_level": {
+            "value": 40.836,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_drawdown": {
+            "value": 6.245,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "static_level_change_30d": {
+            "value": 0.23107,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "static_level_trend_30d": {
+            "value": 0.00054,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "dynamic_level_change_30d": {
+            "value": 0.21573,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "dynamic_level_trend_30d": {
+            "value": -0.00158,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "drawdown_avg_30d": {
+            "value": 6.14137,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "static_level_change_60d": {
+            "value": 0.89001,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 120,
+            "required_days": 120
+          },
+          "static_level_trend_60d": {
+            "value": 0.00782,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "dynamic_level_change_60d": {
+            "value": 0.99734,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 120,
+            "required_days": 120
+          },
+          "dynamic_level_trend_60d": {
+            "value": 0.00748,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "drawdown_avg_60d": {
+            "value": 6.14903,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "static_level_change_90d": {
+            "value": 1.35157,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "static_level_trend_90d": {
+            "value": 0.01289,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "dynamic_level_change_90d": {
+            "value": 1.57637,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "dynamic_level_trend_90d": {
+            "value": 0.01368,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "drawdown_avg_90d": {
+            "value": 6.13151,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "drawdown_trend_30d": {
+            "value": -0.00213,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "drawdown_trend_90d": {
+            "value": 0.00079,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          }
+        },
+        "rainfall": {
+          "rainfall_7d": {
+            "value": 32.412,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "rainfall_30d": {
+            "value": 90.83160000000001,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "rainfall_60d": {
+            "value": 173.279,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "rainfall_90d": {
+            "value": 199.841,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "rainfall_avg_previous_30d": {
+            "value": 2.41183,
+            "status": "AVAILABLE",
+            "unit": "mm/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "rainfall_avg_previous_90d": {
+            "value": 2.9039,
+            "status": "AVAILABLE",
+            "unit": "mm/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "recent_rainfall_deficit_30d": {
+            "value": 0.0,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 60,
+            "required_days": 60
+          }
+        },
+        "operations": {
+          "current_flow_rate": {
+            "value": 57.838,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_utilization": {
+            "value": 1.13585,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "flow_avg_7d": {
+            "value": 57.90386,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "flow_avg_30d": {
+            "value": 57.57553,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "flow_avg_90d": {
+            "value": 57.83531,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumping_hours_avg_7d": {
+            "value": 24.0,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "pumping_hours_avg_30d": {
+            "value": 24.0,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumping_hours_avg_90d": {
+            "value": 23.79188,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumped_volume_avg_7d": {
+            "value": 1389.691,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "pumped_volume_avg_30d": {
+            "value": 1381.81247,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumped_volume_avg_90d": {
+            "value": 1375.78234,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_avg_7d": {
+            "value": 1406.91971,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "demand_avg_30d": {
+            "value": 1514.2850453333333,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "demand_avg_90d": {
+            "value": 1401.56334,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "utilization_avg_7d": {
+            "value": 1.097,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "utilization_avg_30d": {
+            "value": 1.1438173333333332,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "utilization_avg_90d": {
+            "value": 1.09282,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "flow_change_30d": {
+            "value": -0.2997,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "flow_trend_30d": {
+            "value": 0.01007,
+            "status": "AVAILABLE",
+            "unit": "m³/h/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "flow_change_90d": {
+            "value": -0.39391,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "flow_trend_90d": {
+            "value": -0.00654,
+            "status": "AVAILABLE",
+            "unit": "m³/h/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_change_30d": {
+            "value": 7.96,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "demand_trend_30d": {
+            "value": -1.56353,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "demand_change_90d": {
+            "value": 127.99827,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "demand_trend_90d": {
+            "value": 0.71643,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumped_volume_change_30d": {
+            "value": -7.1909,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "pumped_volume_trend_30d": {
+            "value": 0.24179,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumped_volume_change_90d": {
+            "value": 7.77247,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "pumped_volume_trend_90d": {
+            "value": 0.37908,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_pressure_30d": {
+            "value": 0.07268266666666667,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "failures_30d": {
+            "value": 0.0,
+            "status": "AVAILABLE",
+            "unit": "falhas",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "failures_90d": {
+            "value": 1.0,
+            "status": "AVAILABLE",
+            "unit": "falhas",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "days_since_last_failure": {
+            "value": 74.0,
+            "status": "AVAILABLE",
+            "unit": "dias",
+            "observed_days": 180,
+            "required_days": 1
+          }
+        },
+        "aggregation": {}
+      },
+      "delta_points": 2.681706666666667,
+      "delta_pct": 13.223666475998872,
+      "factors": [
+        {
+          "group": "demand",
+          "name": "Pressão de demanda",
+          "baseline": 1.1280000000000001,
+          "hypothetical": 14.536533333333335,
+          "delta_points": 13.408533333333335,
+          "contribution_delta": 2.681706666666667,
+          "explanation": "Pressão de demanda: subscore aumentou. Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.0726827 fração → 14.54/100). Escala experimental."
+        },
+        {
+          "group": "pumping",
+          "name": "Pressão de bombeamento",
+          "baseline": 100.0,
+          "hypothetical": 100.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Pressão de bombeamento: subscore permaneceu estável. Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.14382 fração → 100.00/100). Escala experimental."
+        },
+        {
+          "group": "groundwater",
+          "name": "Estresse subterrâneo",
+          "baseline": 0.17999999999999997,
+          "hypothetical": 0.17999999999999997,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Estresse subterrâneo: subscore permaneceu estável. Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+        },
+        {
+          "group": "rainfall",
+          "name": "Déficit de precipitação",
+          "baseline": 0.0,
+          "hypothetical": 0.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Déficit de precipitação: subscore permaneceu estável. Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0 fração → 0.00/100). Escala experimental."
+        },
+        {
+          "group": "operations",
+          "name": "Estresse operacional",
+          "baseline": 0.0,
+          "hypothetical": 0.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Estresse operacional: subscore permaneceu estável. Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+        }
+      ],
+      "warnings": [
+        "Horas de bombeamento limitadas a 24 h/dia; pressão solicitada pode permanecer saturada."
+      ],
+      "recommendations": [
+        {
+          "rule_id": "STATIC_TREND",
+          "justification": "Tendência positiva da profundidade estática em 30 dias completos; não comprova persistência futura.",
+          "suggestions": [
+            "Conferir consistência das medições e histórico de nível.",
+            "Avaliar condições de bombeamento e necessidade de inspeção técnica."
+          ],
+          "evidence": [
+            {
+              "section": "groundwater",
+              "indicator": "static_level_trend_30d",
+              "value": 0.00054,
+              "unit": "m/dia",
+              "status": "AVAILABLE",
+              "normalized": 0.5399999999999999
+            }
+          ]
+        },
+        {
+          "rule_id": "PUMPING_LOAD",
+          "justification": "Média de bombeamento superior a 16 h/dia em janela completa; não implica tendência crescente.",
+          "suggestions": [
+            "Submeter o regime de operação à revisão técnica.",
+            "Conferir produção e demanda e avaliar inspeção operacional."
+          ],
+          "evidence": [
+            {
+              "section": "operations",
+              "indicator": "pumping_hours_avg_30d",
+              "value": 24.0,
+              "unit": "h/dia",
+              "status": "AVAILABLE",
+              "normalized": 100.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "horizon": 60,
+      "label": "Índice sob cenário hipotético — 60 dias",
+      "applied_parameters": {
+        "rainfall_change_pct": -20.0,
+        "demand_change_pct": 13.333333333333332,
+        "pumping_change_pct": 6.666666666666666
+      },
+      "risk": {
+        "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+        "well_code": "SIM-PI-001",
+        "reference_date": "2025-12-30",
+        "data_classification": "SIMULATED",
+        "source": "SIMULATED:AQUIFERO_VIVO",
+        "model_version": "multicriteria-v1.0.0",
+        "experimental": true,
+        "score": 25.64301333333334,
+        "status": "AVAILABLE",
+        "classification": "NORMAL",
+        "coverage": 1.0,
+        "minimum_coverage": 0.8,
+        "subscores": {
+          "pumping": 100.0,
+          "demand": 27.945066666666698,
+          "groundwater": 0.17999999999999997,
+          "rainfall": 0.0,
+          "operations": 0.0
+        },
+        "factors": [
+          {
+            "group": "pumping",
+            "name": "Pressão de bombeamento",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "pumping_hours_avg_30d",
+                "value": 24.0,
+                "unit": "h/dia",
+                "status": "AVAILABLE",
+                "normalized": 100.0
+              },
+              {
+                "section": "operations",
+                "indicator": "utilization_avg_30d",
+                "value": 1.1807146666666666,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 100.0
+              }
+            ],
+            "subscore": 100.0,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 20.0,
+            "explanation": "Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.18071 fração → 100.00/100). Escala experimental."
+          },
+          {
+            "group": "demand",
+            "name": "Pressão de demanda",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "demand_pressure_30d",
+                "value": 0.13972533333333348,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 27.945066666666698
+              }
+            ],
+            "subscore": 27.945066666666698,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 5.58901333333334,
+            "explanation": "Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.139725 fração → 27.95/100). Escala experimental."
+          },
+          {
+            "group": "groundwater",
+            "name": "Estresse subterrâneo",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "groundwater",
+                "indicator": "static_level_trend_30d",
+                "value": 0.00054,
+                "unit": "m/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.5399999999999999
+              },
+              {
+                "section": "groundwater",
+                "indicator": "drawdown_trend_30d",
+                "value": -0.00213,
+                "unit": "m/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              },
+              {
+                "section": "operations",
+                "indicator": "flow_trend_30d",
+                "value": 0.01007,
+                "unit": "m³/h/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.17999999999999997,
+            "weight": 0.3,
+            "effective_weight": 0.3,
+            "contribution": 0.053999999999999986,
+            "explanation": "Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+          },
+          {
+            "group": "rainfall",
+            "name": "Déficit de precipitação",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "rainfall",
+                "indicator": "recent_rainfall_deficit_30d",
+                "value": 0.0,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.0,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 0.0,
+            "explanation": "Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0 fração → 0.00/100). Escala experimental."
+          },
+          {
+            "group": "operations",
+            "name": "Estresse operacional",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "failures_30d",
+                "value": 0.0,
+                "unit": "falhas",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.0,
+            "weight": 0.1,
+            "effective_weight": 0.1,
+            "contribution": 0.0,
+            "explanation": "Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+          }
+        ],
+        "unavailable_groups": []
+      },
+      "indicators": {
+        "entity_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+        "reference_date": "2025-12-30",
+        "data_classification": "SIMULATED",
+        "source": "SIMULATED:AQUIFERO_VIVO",
+        "sector_id": "a07024ba-88ff-58ce-964e-1fb13591b23c",
+        "groundwater": {
+          "current_static_level": {
+            "value": 34.591,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_dynamic_level": {
+            "value": 40.836,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_drawdown": {
+            "value": 6.245,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "static_level_change_30d": {
+            "value": 0.23107,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "static_level_trend_30d": {
+            "value": 0.00054,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "dynamic_level_change_30d": {
+            "value": 0.21573,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "dynamic_level_trend_30d": {
+            "value": -0.00158,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "drawdown_avg_30d": {
+            "value": 6.14137,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "static_level_change_60d": {
+            "value": 0.89001,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 120,
+            "required_days": 120
+          },
+          "static_level_trend_60d": {
+            "value": 0.00782,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "dynamic_level_change_60d": {
+            "value": 0.99734,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 120,
+            "required_days": 120
+          },
+          "dynamic_level_trend_60d": {
+            "value": 0.00748,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "drawdown_avg_60d": {
+            "value": 6.14903,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "static_level_change_90d": {
+            "value": 1.35157,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "static_level_trend_90d": {
+            "value": 0.01289,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "dynamic_level_change_90d": {
+            "value": 1.57637,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "dynamic_level_trend_90d": {
+            "value": 0.01368,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "drawdown_avg_90d": {
+            "value": 6.13151,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "drawdown_trend_30d": {
+            "value": -0.00213,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "drawdown_trend_90d": {
+            "value": 0.00079,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          }
+        },
+        "rainfall": {
+          "rainfall_7d": {
+            "value": 32.412,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "rainfall_30d": {
+            "value": 80.73920000000001,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "rainfall_60d": {
+            "value": 173.279,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "rainfall_90d": {
+            "value": 199.841,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "rainfall_avg_previous_30d": {
+            "value": 2.41183,
+            "status": "AVAILABLE",
+            "unit": "mm/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "rainfall_avg_previous_90d": {
+            "value": 2.9039,
+            "status": "AVAILABLE",
+            "unit": "mm/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "recent_rainfall_deficit_30d": {
+            "value": 0.0,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 60,
+            "required_days": 60
+          }
+        },
+        "operations": {
+          "current_flow_rate": {
+            "value": 57.838,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_utilization": {
+            "value": 1.13585,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "flow_avg_7d": {
+            "value": 57.90386,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "flow_avg_30d": {
+            "value": 57.57553,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "flow_avg_90d": {
+            "value": 57.83531,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumping_hours_avg_7d": {
+            "value": 24.0,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "pumping_hours_avg_30d": {
+            "value": 24.0,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumping_hours_avg_90d": {
+            "value": 23.79188,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumped_volume_avg_7d": {
+            "value": 1389.691,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "pumped_volume_avg_30d": {
+            "value": 1381.81247,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumped_volume_avg_90d": {
+            "value": 1375.78234,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_avg_7d": {
+            "value": 1406.91971,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "demand_avg_30d": {
+            "value": 1608.9278606666664,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "demand_avg_90d": {
+            "value": 1401.56334,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "utilization_avg_7d": {
+            "value": 1.097,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "utilization_avg_30d": {
+            "value": 1.1807146666666666,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "utilization_avg_90d": {
+            "value": 1.09282,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "flow_change_30d": {
+            "value": -0.2997,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "flow_trend_30d": {
+            "value": 0.01007,
+            "status": "AVAILABLE",
+            "unit": "m³/h/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "flow_change_90d": {
+            "value": -0.39391,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "flow_trend_90d": {
+            "value": -0.00654,
+            "status": "AVAILABLE",
+            "unit": "m³/h/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_change_30d": {
+            "value": 7.96,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "demand_trend_30d": {
+            "value": -1.56353,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "demand_change_90d": {
+            "value": 127.99827,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "demand_trend_90d": {
+            "value": 0.71643,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumped_volume_change_30d": {
+            "value": -7.1909,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "pumped_volume_trend_30d": {
+            "value": 0.24179,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumped_volume_change_90d": {
+            "value": 7.77247,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "pumped_volume_trend_90d": {
+            "value": 0.37908,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_pressure_30d": {
+            "value": 0.13972533333333348,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "failures_30d": {
+            "value": 0.0,
+            "status": "AVAILABLE",
+            "unit": "falhas",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "failures_90d": {
+            "value": 1.0,
+            "status": "AVAILABLE",
+            "unit": "falhas",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "days_since_last_failure": {
+            "value": 74.0,
+            "status": "AVAILABLE",
+            "unit": "dias",
+            "observed_days": 180,
+            "required_days": 1
+          }
+        },
+        "aggregation": {}
+      },
+      "delta_points": 5.363413333333341,
+      "delta_pct": 26.447332951997776,
+      "factors": [
+        {
+          "group": "demand",
+          "name": "Pressão de demanda",
+          "baseline": 1.1280000000000001,
+          "hypothetical": 27.945066666666698,
+          "delta_points": 26.817066666666697,
+          "contribution_delta": 5.36341333333334,
+          "explanation": "Pressão de demanda: subscore aumentou. Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.139725 fração → 27.95/100). Escala experimental."
+        },
+        {
+          "group": "pumping",
+          "name": "Pressão de bombeamento",
+          "baseline": 100.0,
+          "hypothetical": 100.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Pressão de bombeamento: subscore permaneceu estável. Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.18071 fração → 100.00/100). Escala experimental."
+        },
+        {
+          "group": "groundwater",
+          "name": "Estresse subterrâneo",
+          "baseline": 0.17999999999999997,
+          "hypothetical": 0.17999999999999997,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Estresse subterrâneo: subscore permaneceu estável. Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+        },
+        {
+          "group": "rainfall",
+          "name": "Déficit de precipitação",
+          "baseline": 0.0,
+          "hypothetical": 0.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Déficit de precipitação: subscore permaneceu estável. Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0 fração → 0.00/100). Escala experimental."
+        },
+        {
+          "group": "operations",
+          "name": "Estresse operacional",
+          "baseline": 0.0,
+          "hypothetical": 0.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Estresse operacional: subscore permaneceu estável. Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+        }
+      ],
+      "warnings": [
+        "Horas de bombeamento limitadas a 24 h/dia; pressão solicitada pode permanecer saturada."
+      ],
+      "recommendations": [
+        {
+          "rule_id": "STATIC_TREND",
+          "justification": "Tendência positiva da profundidade estática em 30 dias completos; não comprova persistência futura.",
+          "suggestions": [
+            "Conferir consistência das medições e histórico de nível.",
+            "Avaliar condições de bombeamento e necessidade de inspeção técnica."
+          ],
+          "evidence": [
+            {
+              "section": "groundwater",
+              "indicator": "static_level_trend_30d",
+              "value": 0.00054,
+              "unit": "m/dia",
+              "status": "AVAILABLE",
+              "normalized": 0.5399999999999999
+            }
+          ]
+        },
+        {
+          "rule_id": "PUMPING_LOAD",
+          "justification": "Média de bombeamento superior a 16 h/dia em janela completa; não implica tendência crescente.",
+          "suggestions": [
+            "Submeter o regime de operação à revisão técnica.",
+            "Conferir produção e demanda e avaliar inspeção operacional."
+          ],
+          "evidence": [
+            {
+              "section": "operations",
+              "indicator": "pumping_hours_avg_30d",
+              "value": 24.0,
+              "unit": "h/dia",
+              "status": "AVAILABLE",
+              "normalized": 100.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "horizon": 90,
+      "label": "Índice sob cenário hipotético — 90 dias",
+      "applied_parameters": {
+        "rainfall_change_pct": -30.0,
+        "demand_change_pct": 20.0,
+        "pumping_change_pct": 10.0
+      },
+      "risk": {
+        "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+        "well_code": "SIM-PI-001",
+        "reference_date": "2025-12-30",
+        "data_classification": "SIMULATED",
+        "source": "SIMULATED:AQUIFERO_VIVO",
+        "model_version": "multicriteria-v1.0.0",
+        "experimental": true,
+        "score": 28.796864941116638,
+        "status": "AVAILABLE",
+        "classification": "NORMAL",
+        "coverage": 1.0,
+        "minimum_coverage": 0.8,
+        "subscores": {
+          "pumping": 100.0,
+          "demand": 41.353600000000014,
+          "rainfall": 2.3607247055831726,
+          "groundwater": 0.17999999999999997,
+          "operations": 0.0
+        },
+        "factors": [
+          {
+            "group": "pumping",
+            "name": "Pressão de bombeamento",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "pumping_hours_avg_30d",
+                "value": 24.0,
+                "unit": "h/dia",
+                "status": "AVAILABLE",
+                "normalized": 100.0
+              },
+              {
+                "section": "operations",
+                "indicator": "utilization_avg_30d",
+                "value": 1.217612,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 100.0
+              }
+            ],
+            "subscore": 100.0,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 20.0,
+            "explanation": "Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.21761 fração → 100.00/100). Escala experimental."
+          },
+          {
+            "group": "demand",
+            "name": "Pressão de demanda",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "demand_pressure_30d",
+                "value": 0.20676800000000006,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 41.353600000000014
+              }
+            ],
+            "subscore": 41.353600000000014,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 8.270720000000003,
+            "explanation": "Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.206768 fração → 41.35/100). Escala experimental."
+          },
+          {
+            "group": "rainfall",
+            "name": "Déficit de precipitação",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "rainfall",
+                "indicator": "recent_rainfall_deficit_30d",
+                "value": 0.023607247055831726,
+                "unit": "fração",
+                "status": "AVAILABLE",
+                "normalized": 2.3607247055831726
+              }
+            ],
+            "subscore": 2.3607247055831726,
+            "weight": 0.2,
+            "effective_weight": 0.2,
+            "contribution": 0.4721449411166345,
+            "explanation": "Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0.0236072 fração → 2.36/100). Escala experimental."
+          },
+          {
+            "group": "groundwater",
+            "name": "Estresse subterrâneo",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "groundwater",
+                "indicator": "static_level_trend_30d",
+                "value": 0.00054,
+                "unit": "m/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.5399999999999999
+              },
+              {
+                "section": "groundwater",
+                "indicator": "drawdown_trend_30d",
+                "value": -0.00213,
+                "unit": "m/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              },
+              {
+                "section": "operations",
+                "indicator": "flow_trend_30d",
+                "value": 0.01007,
+                "unit": "m³/h/dia",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.17999999999999997,
+            "weight": 0.3,
+            "effective_weight": 0.3,
+            "contribution": 0.053999999999999986,
+            "explanation": "Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+          },
+          {
+            "group": "operations",
+            "name": "Estresse operacional",
+            "status": "AVAILABLE",
+            "indicators": [
+              {
+                "section": "operations",
+                "indicator": "failures_30d",
+                "value": 0.0,
+                "unit": "falhas",
+                "status": "AVAILABLE",
+                "normalized": 0.0
+              }
+            ],
+            "subscore": 0.0,
+            "weight": 0.1,
+            "effective_weight": 0.1,
+            "contribution": 0.0,
+            "explanation": "Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+          }
+        ],
+        "unavailable_groups": []
+      },
+      "indicators": {
+        "entity_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+        "reference_date": "2025-12-30",
+        "data_classification": "SIMULATED",
+        "source": "SIMULATED:AQUIFERO_VIVO",
+        "sector_id": "a07024ba-88ff-58ce-964e-1fb13591b23c",
+        "groundwater": {
+          "current_static_level": {
+            "value": 34.591,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_dynamic_level": {
+            "value": 40.836,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_drawdown": {
+            "value": 6.245,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "static_level_change_30d": {
+            "value": 0.23107,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "static_level_trend_30d": {
+            "value": 0.00054,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "dynamic_level_change_30d": {
+            "value": 0.21573,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "dynamic_level_trend_30d": {
+            "value": -0.00158,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "drawdown_avg_30d": {
+            "value": 6.14137,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "static_level_change_60d": {
+            "value": 0.89001,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 120,
+            "required_days": 120
+          },
+          "static_level_trend_60d": {
+            "value": 0.00782,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "dynamic_level_change_60d": {
+            "value": 0.99734,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 120,
+            "required_days": 120
+          },
+          "dynamic_level_trend_60d": {
+            "value": 0.00748,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "drawdown_avg_60d": {
+            "value": 6.14903,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "static_level_change_90d": {
+            "value": 1.35157,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "static_level_trend_90d": {
+            "value": 0.01289,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "dynamic_level_change_90d": {
+            "value": 1.57637,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "dynamic_level_trend_90d": {
+            "value": 0.01368,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "drawdown_avg_90d": {
+            "value": 6.13151,
+            "status": "AVAILABLE",
+            "unit": "m",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "drawdown_trend_30d": {
+            "value": -0.00213,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "drawdown_trend_90d": {
+            "value": 0.00079,
+            "status": "AVAILABLE",
+            "unit": "m/dia",
+            "observed_days": 90,
+            "required_days": 90
+          }
+        },
+        "rainfall": {
+          "rainfall_7d": {
+            "value": 32.412,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "rainfall_30d": {
+            "value": 70.6468,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "rainfall_60d": {
+            "value": 173.279,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "rainfall_90d": {
+            "value": 199.841,
+            "status": "AVAILABLE",
+            "unit": "mm",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "rainfall_avg_previous_30d": {
+            "value": 2.41183,
+            "status": "AVAILABLE",
+            "unit": "mm/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "rainfall_avg_previous_90d": {
+            "value": 2.9039,
+            "status": "AVAILABLE",
+            "unit": "mm/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "recent_rainfall_deficit_30d": {
+            "value": 0.023607247055831726,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 60,
+            "required_days": 60
+          }
+        },
+        "operations": {
+          "current_flow_rate": {
+            "value": 57.838,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "current_utilization": {
+            "value": 1.13585,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 1,
+            "required_days": 1
+          },
+          "flow_avg_7d": {
+            "value": 57.90386,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "flow_avg_30d": {
+            "value": 57.57553,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "flow_avg_90d": {
+            "value": 57.83531,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumping_hours_avg_7d": {
+            "value": 24.0,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "pumping_hours_avg_30d": {
+            "value": 24.0,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumping_hours_avg_90d": {
+            "value": 23.79188,
+            "status": "AVAILABLE",
+            "unit": "h/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumped_volume_avg_7d": {
+            "value": 1389.691,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "pumped_volume_avg_30d": {
+            "value": 1381.81247,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumped_volume_avg_90d": {
+            "value": 1375.78234,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_avg_7d": {
+            "value": 1406.91971,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "demand_avg_30d": {
+            "value": 1703.5706759999998,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "demand_avg_90d": {
+            "value": 1401.56334,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "utilization_avg_7d": {
+            "value": 1.097,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 7,
+            "required_days": 7
+          },
+          "utilization_avg_30d": {
+            "value": 1.217612,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "utilization_avg_90d": {
+            "value": 1.09282,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "flow_change_30d": {
+            "value": -0.2997,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "flow_trend_30d": {
+            "value": 0.01007,
+            "status": "AVAILABLE",
+            "unit": "m³/h/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "flow_change_90d": {
+            "value": -0.39391,
+            "status": "AVAILABLE",
+            "unit": "m³/h",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "flow_trend_90d": {
+            "value": -0.00654,
+            "status": "AVAILABLE",
+            "unit": "m³/h/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_change_30d": {
+            "value": 7.96,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "demand_trend_30d": {
+            "value": -1.56353,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "demand_change_90d": {
+            "value": 127.99827,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "demand_trend_90d": {
+            "value": 0.71643,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "pumped_volume_change_30d": {
+            "value": -7.1909,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "pumped_volume_trend_30d": {
+            "value": 0.24179,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "pumped_volume_change_90d": {
+            "value": 7.77247,
+            "status": "AVAILABLE",
+            "unit": "m³/dia",
+            "observed_days": 180,
+            "required_days": 180
+          },
+          "pumped_volume_trend_90d": {
+            "value": 0.37908,
+            "status": "AVAILABLE",
+            "unit": "m³/dia/dia",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "demand_pressure_30d": {
+            "value": 0.20676800000000006,
+            "status": "AVAILABLE",
+            "unit": "fração",
+            "observed_days": 60,
+            "required_days": 60
+          },
+          "failures_30d": {
+            "value": 0.0,
+            "status": "AVAILABLE",
+            "unit": "falhas",
+            "observed_days": 30,
+            "required_days": 30
+          },
+          "failures_90d": {
+            "value": 1.0,
+            "status": "AVAILABLE",
+            "unit": "falhas",
+            "observed_days": 90,
+            "required_days": 90
+          },
+          "days_since_last_failure": {
+            "value": 74.0,
+            "status": "AVAILABLE",
+            "unit": "dias",
+            "observed_days": 180,
+            "required_days": 1
+          }
+        },
+        "aggregation": {}
+      },
+      "delta_points": 8.51726494111664,
+      "delta_pct": 41.99917622199965,
+      "factors": [
+        {
+          "group": "demand",
+          "name": "Pressão de demanda",
+          "baseline": 1.1280000000000001,
+          "hypothetical": 41.353600000000014,
+          "delta_points": 40.225600000000014,
+          "contribution_delta": 8.045120000000002,
+          "explanation": "Pressão de demanda: subscore aumentou. Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.206768 fração → 41.35/100). Escala experimental."
+        },
+        {
+          "group": "rainfall",
+          "name": "Déficit de precipitação",
+          "baseline": 0.0,
+          "hypothetical": 2.3607247055831726,
+          "delta_points": 2.3607247055831726,
+          "contribution_delta": 0.4721449411166345,
+          "explanation": "Déficit de precipitação: subscore aumentou. Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0.0236072 fração → 2.36/100). Escala experimental."
+        },
+        {
+          "group": "pumping",
+          "name": "Pressão de bombeamento",
+          "baseline": 100.0,
+          "hypothetical": 100.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Pressão de bombeamento: subscore permaneceu estável. Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.21761 fração → 100.00/100). Escala experimental."
+        },
+        {
+          "group": "groundwater",
+          "name": "Estresse subterrâneo",
+          "baseline": 0.17999999999999997,
+          "hypothetical": 0.17999999999999997,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Estresse subterrâneo: subscore permaneceu estável. Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+        },
+        {
+          "group": "operations",
+          "name": "Estresse operacional",
+          "baseline": 0.0,
+          "hypothetical": 0.0,
+          "delta_points": 0.0,
+          "contribution_delta": 0.0,
+          "explanation": "Estresse operacional: subscore permaneceu estável. Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+        }
+      ],
+      "warnings": [
+        "Horas de bombeamento limitadas a 24 h/dia; pressão solicitada pode permanecer saturada."
+      ],
+      "recommendations": [
+        {
+          "rule_id": "STATIC_TREND",
+          "justification": "Tendência positiva da profundidade estática em 30 dias completos; não comprova persistência futura.",
+          "suggestions": [
+            "Conferir consistência das medições e histórico de nível.",
+            "Avaliar condições de bombeamento e necessidade de inspeção técnica."
+          ],
+          "evidence": [
+            {
+              "section": "groundwater",
+              "indicator": "static_level_trend_30d",
+              "value": 0.00054,
+              "unit": "m/dia",
+              "status": "AVAILABLE",
+              "normalized": 0.5399999999999999
+            }
+          ]
+        },
+        {
+          "rule_id": "PUMPING_LOAD",
+          "justification": "Média de bombeamento superior a 16 h/dia em janela completa; não implica tendência crescente.",
+          "suggestions": [
+            "Submeter o regime de operação à revisão técnica.",
+            "Conferir produção e demanda e avaliar inspeção operacional."
+          ],
+          "evidence": [
+            {
+              "section": "operations",
+              "indicator": "pumping_hours_avg_30d",
+              "value": 24.0,
+              "unit": "h/dia",
+              "status": "AVAILABLE",
+              "normalized": 100.0
+            }
+          ]
+        },
+        {
+          "rule_id": "DEMAND_PRESSURE",
+          "justification": "Aumento relativo da demanda superior a 0,20 entre janelas completas.",
+          "suggestions": [
+            "Conferir registros de produção e demanda.",
+            "Avaliar tecnicamente a pressão sobre o regime de operação."
+          ],
+          "evidence": [
+            {
+              "section": "operations",
+              "indicator": "demand_pressure_30d",
+              "value": 0.20676800000000006,
+              "unit": "fração",
+              "status": "AVAILABLE",
+              "normalized": 41.353600000000014
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "assumptions": [
+    "Multiplicador por horizonte: 1 + (alteração percentual / 100) × progressão configurada (30: 1/3; 60: 2/3; 90: 1).",
+    "Chuva recente de 30 dias é multiplicada; janela anterior permanece fixa. Déficit = max(0, 1 − chuva recente / chuva anterior).",
+    "Demanda recente é multiplicada; pressão = (1 + pressão original) × multiplicador − 1, com janela anterior fixa.",
+    "Horas médias = min(24, horas originais × multiplicador de bombeamento); utilização solicitada é multiplicada sem teto hidráulico.",
+    "Volume médio é ajustado pela razão das horas efetivas, mantendo vazão constante; demais janelas e tendências não são extrapoladas.",
+    "Os horizontes descrevem sensibilidade de uma janela recente hipotética, não datas de observações futuras."
+  ],
+  "warnings": [
+    "Os resultados são simulações exploratórias produzidas a partir de indicadores e parâmetros experimentais. Não constituem previsão hidrogeológica validada nem recomendação operacional automática.",
+    "Níveis estáticos, drawdown, vazão e falhas permanecem constantes: não há modelo físico ou estatístico calibrado.",
+    "Utilização representa tempo solicitado, não capacidade hidráulica. Horas efetivas são limitadas a 24 por dia; utilização solicitada pode exceder 1.",
+    "Saturação e dados insuficientes podem impedir alterações do índice. Cobertura não é confiança preditiva."
+  ]
+}

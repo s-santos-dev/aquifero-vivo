@@ -38,6 +38,7 @@ class Well(CatalogProvenance, UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "wells"
     __table_args__ = (
         Index("ix_wells_location_gist", "location", postgresql_using="gist"),
+        UniqueConstraint("source", "source_record_id", name="uq_wells_source_record"),
     )
 
     code: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
@@ -48,8 +49,10 @@ class Well(CatalogProvenance, UUIDPrimaryKeyMixin, TimestampMixin, Base):
     municipality: Mapped[str | None] = mapped_column(String(120))
     state: Mapped[str | None] = mapped_column(String(2))
     depth_m: Mapped[Decimal | None] = mapped_column(Numeric(10, 2))
-    is_active: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=True, server_default=text("true")
+    source_record_id: Mapped[str | None] = mapped_column(String(64))
+    source_metadata: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    is_active: Mapped[bool | None] = mapped_column(
+        Boolean, nullable=True, default=True, server_default=text("true")
     )
 
     groundwater_measurements: Mapped[list[GroundwaterMeasurement]] = relationship(
@@ -95,6 +98,29 @@ class GroundwaterMeasurement(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     data_classification: Mapped[str] = mapped_column(String(16), nullable=False)
 
     well: Mapped[Well] = relationship(back_populates="groundwater_measurements")
+
+
+class GroundwaterObservation(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    """Original public readings; deliberately outside daily indicator inputs."""
+    __tablename__ = "groundwater_observations"
+    __table_args__ = (
+        UniqueConstraint("source", "dataset", "station_code", "source_record_id", name="uq_observation_source_record"),
+        CheckConstraint("source = 'RIMAS' AND data_classification = 'PUBLIC'", name="ck_observation_origin"),
+        CheckConstraint("unit = 'm'", name="ck_observation_unit"),
+        Index("ix_observation_well_measured_at", "well_id", "measured_at"),
+    )
+    well_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("wells.id", ondelete="CASCADE"), nullable=False)
+    # Portal CSV supplies a wall-clock time without a timezone: never invent UTC.
+    measured_at: Mapped[datetime] = mapped_column(DateTime(timezone=False), nullable=False)
+    observed_level_m: Mapped[Decimal] = mapped_column(Numeric(12, 4), nullable=False)
+    unit: Mapped[str] = mapped_column(String(8), nullable=False)
+    source: Mapped[str] = mapped_column(String(80), nullable=False)
+    data_classification: Mapped[str] = mapped_column(String(16), nullable=False)
+    dataset: Mapped[str] = mapped_column(String(40), nullable=False)
+    station_code: Mapped[str] = mapped_column(String(64), nullable=False)
+    source_record_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    pumping: Mapped[str | None] = mapped_column(String(1))
+    source_metadata: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
 
 
 class ServiceSector(CatalogProvenance, UUIDPrimaryKeyMixin, TimestampMixin, Base):

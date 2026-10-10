@@ -1,0 +1,116 @@
+{
+  "validated_on": "2026-10-10",
+  "source": "INMET",
+  "station": "A237",
+  "station_id": "62d9510e-a8f3-5f7b-88be-453fe8e1aca4",
+  "latitude": -4.82138888,
+  "longitude": -43.3436111,
+  "distance_km": 67.170592246,
+  "distance_method": "PostGIS ST_Distance geography, WGS84 spheroid",
+  "start": "2025-01-01",
+  "end": "2025-03-31",
+  "records": 2160,
+  "expected_hours": 2160,
+  "complete_days": 90,
+  "expected_days": 90,
+  "rejections": 0,
+  "missing_values": 0,
+  "duplicate_records": 0,
+  "unit": "mm",
+  "timezone": "UTC",
+  "quality": "NOT_PROVIDED",
+  "migrations": [
+    "0007",
+    "0008"
+  ],
+  "backend_tests": {
+    "passed": 234,
+    "warnings": 2,
+    "postgis": true
+  },
+  "alembic_check": "No new upgrade operations detected.",
+  "typescript_vite": "passed",
+  "compose_config": "passed",
+  "real_import": "passed via official browser download and ZIP file",
+  "live_http_download": "server disconnected; not bypassed",
+  "reimport": {
+    "created": 0,
+    "unchanged": 2160
+  },
+  "protected_content_sha256_equal": true,
+  "protected_counts": {
+    "wells": {
+      "count": 106,
+      "sha256": "d981cb708ac05d89cb024aa3272e5baba5be420e673c0d9345c4936dbd6b70db"
+    },
+    "service_sectors": {
+      "count": 20,
+      "sha256": "2ddb947a6a1e50b7aa52084d01437ab87d39c3f29a572edbdb7e442615636189"
+    },
+    "well_sectors": {
+      "count": 80,
+      "sha256": "1fbd2d64d72e860120cf0c3d3da08a352d4000923751bec7c0f6e25a9f9d0b23"
+    },
+    "groundwater_measurements": {
+      "count": 58400,
+      "sha256": "614391abaa0ba92cdcfeab993199390bdd3e3fa99f9c5b65afce5e90cdd0ea36"
+    },
+    "operational_measurements": {
+      "count": 58400,
+      "sha256": "33ec64d6679f6460b269b280a56a171bfe7209076447d15f68f818627e1f88a4"
+    },
+    "rainfall_measurements": {
+      "count": 14600,
+      "sha256": "57127e8fb9299bc7d8d4feea691393a6a0919b0eacb0c4ef6f1dbfa466c65cf4"
+    },
+    "groundwater_observations": {
+      "count": 91,
+      "sha256": "b468977d522163df301778f192ba4fa67f933bf721ab8b66eade5bd67a494117"
+    },
+    "risk_assessments": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "risk_factors": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "alerts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "well_origins": [
+    {
+      "classification": "SIMULATED",
+      "count": 80
+    },
+    {
+      "classification": "PUBLIC",
+      "count": 26
+    }
+  ],
+  "final_counts": {
+    "climate_stations": 1,
+    "rainfall_observations": 2160
+  },
+  "visual_validation": {
+    "real_api": true,
+    "station": true,
+    "history": true,
+    "chart": true,
+    "period": true,
+    "missing_data": true,
+    "error_state": true,
+    "invalid_period": true,
+    "rimas_separate": true
+  },
+  "limitations": [
+    "A312/Teresina precipitation entirely missing in inspected quarter",
+    "Regional source ~67 km from RETE; no automatic rainfall attribution",
+    "RIMAS timezone remains unknown",
+    "Quality flags and original coordinate datum not provided in CSV",
+    "No causal, recharge, official drought or climate-normal inference",
+    "No risk or simulation input change"
+  ]
+}

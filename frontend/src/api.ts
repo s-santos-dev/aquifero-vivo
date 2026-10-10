@@ -15,3 +15,9 @@ export async function getAllPages<T>(path: string, signal?: AbortSignal): Promis
   const remaining = await Promise.all(Array.from({ length: first.pages - 1 }, (_, index) => getJson<Page<T>>(`${path}${separator}page=${index + 2}&page_size=${pageSize}`, signal)))
   return [first.items, ...remaining.map((page) => page.items)].flat()
 }
+
+export async function postJson<T>(path: string, body: unknown, signal?: AbortSignal): Promise<T> {
+  const response = await fetch(`${apiUrl}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal })
+  if (!response.ok) throw new Error(response.status === 422 ? 'Parâmetros inválidos. Verifique os limites e a data.' : 'Não foi possível executar a simulação. Tente novamente.')
+  return response.json() as Promise<T>
+}

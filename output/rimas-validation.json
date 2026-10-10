@@ -1,0 +1,126 @@
+{
+  "validation_date": "2026-10-10",
+  "services": {
+    "portal": "accessible; official CSV downloaded",
+    "arcgis_rimas": "metadata accessible; data queries timed out",
+    "hosted_rimas": "28 PI registry features; no truncation"
+  },
+  "coverage": {
+    "pi_catalog_candidates": 28,
+    "verified_pilot_stations": 1,
+    "other_series_not_verified": 27
+  },
+  "pilot": {
+    "station": "2200034952",
+    "name": "RETE",
+    "municipality": "Teresina",
+    "well_id": "1b2e8ad0-1c88-5d1d-a102-2603a45a2026",
+    "start": "2025-01-01",
+    "end": "2025-03-31",
+    "observations": 91,
+    "batch": "20261010T165320Z-a225b869",
+    "raw_sha256": "cf608e3c186b2b027a67f18932e8b3f582353aea9387b10bbe32878cdc8a4126",
+    "unit": "m",
+    "timezone": "UNKNOWN",
+    "level_reference": "UNKNOWN",
+    "pumping_markers": [
+      "N"
+    ],
+    "minimum_interval_hours": 3.0,
+    "maximum_interval_hours": 47.0
+  },
+  "load_reports": [
+    {
+      "batch": "20261010T165320Z-a225b869",
+      "consulted": 91,
+      "accepted": 91,
+      "rejected": [],
+      "duplicates": [],
+      "days": 90,
+      "multiple_reading_days": {
+        "2025-01-28": 2
+      },
+      "missing_days": 0,
+      "temporal_policy": "ORIGINAL_OBSERVATIONS_NO_CONSOLIDATION",
+      "load": {
+        "created_wells": 0,
+        "created_observations": 0,
+        "unchanged_observations": 91
+      }
+    },
+    {
+      "batch": "20261010T165320Z-a225b869",
+      "consulted": 91,
+      "accepted": 91,
+      "rejected": [],
+      "duplicates": [],
+      "days": 90,
+      "multiple_reading_days": {
+        "2025-01-28": 2
+      },
+      "missing_days": 0,
+      "temporal_policy": "ORIGINAL_OBSERVATIONS_NO_CONSOLIDATION",
+      "load": {
+        "created_wells": 0,
+        "created_observations": 0,
+        "unchanged_observations": 91
+      }
+    },
+    {
+      "batch": "20261010T165320Z-a225b869",
+      "consulted": 91,
+      "accepted": 91,
+      "rejected": [],
+      "duplicates": [],
+      "days": 90,
+      "multiple_reading_days": {
+        "2025-01-28": 2
+      },
+      "missing_days": 0,
+      "temporal_policy": "ORIGINAL_OBSERVATIONS_NO_CONSOLIDATION",
+      "load": {
+        "created_wells": 1,
+        "created_observations": 91,
+        "unchanged_observations": 0
+      }
+    }
+  ],
+  "replay_content": {
+    "before_replay": {
+      "count": 91,
+      "sha256": "2bfdfb91f5797d65d4efc6ef5545cfea05cc8a8e48dd17ef15d04a82bde1b610"
+    },
+    "after_replay": {
+      "count": 91,
+      "sha256": "2bfdfb91f5797d65d4efc6ef5545cfea05cc8a8e48dd17ef15d04a82bde1b610"
+    },
+    "content_unchanged": true
+  },
+  "existing_content_unchanged": true,
+  "synthetic_measurements_preserved": 131400,
+  "final_catalog": {
+    "total_wells": 106,
+    "active_wells": 77,
+    "inactive_wells": 3,
+    "total_sectors": 20,
+    "total_measurements": 131400,
+    "rimas_observations": 91,
+    "simulated_wells": 80,
+    "siagas_wells": 26,
+    "unknown_status_wells": 26,
+    "evaluable_wells": 80,
+    "analysis_date": "2025-12-30"
+  },
+  "risk": {
+    "status": "INSUFFICIENT_DATA",
+    "score": null,
+    "classification": null
+  },
+  "checks": {
+    "backend_postgis": "192 passed; 2 pre-existing deprecation warnings",
+    "typescript_vite": "passed",
+    "alembic": "No new upgrade operations detected",
+    "compose_config": "passed",
+    "browser": "91 observations rendered; explicit date form applied; 2025-01-28 returned original 07:00/13:00 readings, sequences 3371/3372; no console errors; 2025-04-01/02 correctly displayed no observations"
+  }
+}

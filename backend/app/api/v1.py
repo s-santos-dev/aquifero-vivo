@@ -8,13 +8,14 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import Boolean, Integer, Numeric, String, cast, func, literal, or_, select, union_all
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.indicators.service import sector_indicators, well_indicators
 from app.models import (
     GroundwaterMeasurement,
+    GroundwaterObservation,
     OperationalMeasurement,
     RainfallMeasurement,
     ServiceSector,
@@ -38,10 +39,28 @@ from app.risk.service import well_risk
 from app.risk.territorial import assessments, filtered, distribution, alerts
 from app.risk.recommendations import recommendations
 from app.schemas.priority import Classification, PriorityPage, AlertPage, RecommendationsResponse
+from app.scenarios.config import PRESETS, MIN_CHANGE, MAX_CHANGE, PROGRESSION, VERSION
+from app.scenarios.schemas import SimulationRequest, SimulationResponse
+from app.scenarios.service import simulate_well
 
 
 router = APIRouter(prefix="/api/v1")
 DbSession = Annotated[Session, Depends(get_db)]
+
+@router.get("/scenarios/config", tags=["scenarios"])
+def scenario_config():
+    return {"version": VERSION, "min_change_pct": MIN_CHANGE, "max_change_pct": MAX_CHANGE,
+            "progression": PROGRESSION, "presets": PRESETS}
+
+
+@router.post("/scenarios/simulate", response_model=SimulationResponse, tags=["scenarios"])
+def scenario_simulation(request: SimulationRequest, db: DbSession):
+    well = db.get(Well, request.well_id)
+    if well is None:
+        raise HTTPException(status_code=404, detail="Poço não encontrado")
+    return simulate_well(db, well, request)
+
+
 PageNumber = Annotated[int, Query(ge=1, description="Número da página")]
 PageSize = Annotated[int, Query(ge=1, le=100, description="Itens por página (máximo 100)")]
 
@@ -96,8 +115,13 @@ def _geometry(value: str | dict[str, Any]) -> dict[str, Any]:
     return json.loads(value) if isinstance(value, str) else value
 
 
-def _well_response(well: Well, location: str | dict[str, Any]) -> WellResponse:
+def _has_rimas():
+    return select(GroundwaterObservation.id).where(GroundwaterObservation.well_id == Well.id).exists()
+
+
+def _well_response(well: Well, location: str | dict[str, Any], has_rimas=False) -> WellResponse:
     return WellResponse(
+        has_rimas_observations=has_rimas,
         id=well.id,
         source=well.source,
         data_classification=well.data_classification,
@@ -108,6 +132,8 @@ def _well_response(well: Well, location: str | dict[str, Any]) -> WellResponse:
         state=well.state,
         depth_m=well.depth_m,
         is_active=well.is_active,
+        source_record_id=well.source_record_id,
+        source_metadata=well.source_metadata,
         created_at=well.created_at,
         updated_at=well.updated_at,
     )
@@ -137,12 +163,20 @@ def dashboard_summary(db: DbSession) -> DashboardSummaryResponse:
         db.scalar(select(func.count()).select_from(model)) or 0
         for model in (GroundwaterMeasurement, OperationalMeasurement, RainfallMeasurement)
     )
+    unknown = db.scalar(select(func.count()).select_from(Well).where(Well.is_active.is_(None))) or 0
+    risk_items, day = assessments(db)
     return DashboardSummaryResponse(
         total_wells=total_wells,
         active_wells=active_wells,
-        inactive_wells=total_wells - active_wells,
+        inactive_wells=total_wells - active_wells - unknown,
+        unknown_status_wells=unknown,
+        simulated_wells=db.scalar(select(func.count()).select_from(Well).where(Well.data_classification == 'SIMULATED')) or 0,
+        siagas_wells=db.scalar(select(func.count()).select_from(Well).where(Well.source == 'SIAGAS', Well.data_classification == 'PUBLIC')) or 0,
+        evaluable_wells=sum(item.status == 'AVAILABLE' for item in risk_items),
+        analysis_date=day.isoformat() if day else None,
         total_sectors=total_sectors,
         total_measurements=total_measurements,
+        rimas_observations=db.scalar(select(func.count()).select_from(GroundwaterObservation)) or 0,
     )
 
 
@@ -162,8 +196,11 @@ def list_wells(
     sector_id: Annotated[uuid.UUID | None, Query(description="Setor de atendimento vigente")] = None,
     state: Annotated[str | None, Query(min_length=2, max_length=2, description="UF")] = None,
     is_active: Annotated[bool | None, Query(description="Situação operacional")] = None,
+    source: Annotated[str | None, Query(min_length=1, max_length=80, description="Origem; SIMULATED seleciona a classificação sintética")] = None,
 ) -> dict[str, Any]:
     filters = []
+    if source:
+        filters.append(_has_rimas() if source.upper() == 'RIMAS' else Well.data_classification == 'SIMULATED' if source.upper() == 'SIMULATED' else Well.source == source)
     if q:
         pattern = f"%{q}%"
         filters.append(or_(Well.code.ilike(pattern), Well.name.ilike(pattern)))
@@ -188,13 +225,13 @@ def list_wells(
 
     total = db.scalar(select(func.count()).select_from(Well).where(*filters)) or 0
     statement = (
-        select(Well, func.ST_AsGeoJSON(Well.location))
+        select(Well, func.ST_AsGeoJSON(Well.location), _has_rimas())
         .where(*filters)
         .order_by(Well.code, Well.id)
         .offset((page - 1) * page_size)
         .limit(page_size)
     )
-    items = [_well_response(well, location) for well, location in db.execute(statement)]
+    items = [_well_response(well, location, has_rimas) for well, location, has_rimas in db.execute(statement)]
     return _page(items, total, page, page_size)
 
 
@@ -207,11 +244,11 @@ def list_wells(
 )
 def get_well(well_id: uuid.UUID, db: DbSession) -> WellResponse:
     row = db.execute(
-        select(Well, func.ST_AsGeoJSON(Well.location)).where(Well.id == well_id)
+        select(Well, func.ST_AsGeoJSON(Well.location), _has_rimas()).where(Well.id == well_id)
     ).one_or_none()
     if row is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Poço não encontrado")
-    return _well_response(row[0], row[1])
+    return _well_response(row[0], row[1], row[2])
 
 
 @router.get("/wells/{well_id}/indicators", response_model=IndicatorResponse, tags=["indicators"],
@@ -378,6 +415,26 @@ def _measurement_selects(
                 RainfallMeasurement.updated_at.label("updated_at"),
             ).where(*filters)
         )
+    # Add optional observation fields without changing the existing static-level contract.
+    extras = {"observed_level_m": Numeric(), "unit": String(), "dataset": String(),
+              "pumping": String(), "source_record_id": String(), "source_metadata": JSONB()}
+    statements = [s.add_columns(*(cast(literal(None), t).label(k) for k, t in extras.items())) for s in statements]
+    if "groundwater" in measurement_types and sector_id is None:
+        model = GroundwaterObservation
+        filters = []
+        # For unknown timezone, bounds compare original local clock components.
+        if measured_from: filters.append(model.measured_at >= measured_from.replace(tzinfo=None))
+        if measured_to: filters.append(model.measured_at <= measured_to.replace(tzinfo=None))
+        if classification: filters.append(model.data_classification == classification)
+        if source: filters.append(model.source.ilike(source))
+        if well_id: filters.append(model.well_id == well_id)
+        values = dict(id=model.id, type=literal("groundwater"), well_id=model.well_id,
+            # UTC is only a union sorting carrier; response restores original naive time.
+            measured_at=func.timezone("UTC", model.measured_at), data_classification=model.data_classification,
+            source=model.source, station_code=model.station_code, created_at=model.created_at,
+            updated_at=model.updated_at, **{k: getattr(model, k) for k in extras})
+        template = statements[0].selected_columns
+        statements.append(select(*(values.get(c.key, cast(literal(None), c.type)).label(c.key) for c in template)).where(*filters))
     return statements
 
 
@@ -424,6 +481,8 @@ def list_measurements(
     items = []
     for row in db.execute(statement).mappings():
         payload = dict(row)
+        if payload.get("dataset"):
+            payload["measured_at"] = payload["source_metadata"]["original_datetime"]
         if payload["location"] is not None:
             payload["location"] = _geometry(payload["location"])
         items.append(MeasurementResponse.model_validate(payload))

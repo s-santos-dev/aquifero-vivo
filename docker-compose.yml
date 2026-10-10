@@ -43,6 +43,12 @@ services:
     volumes:
       - ./backend:/app
       - ./data/simulated:/data/simulated
+      - ./data/raw/siagas:/data/raw/siagas
+      - ./data/processed/siagas:/data/processed/siagas
+      - ./data/raw/rimas:/data/raw/rimas
+      - ./data/processed/rimas:/data/processed/rimas
+      - ./data/raw/climate:/data/raw/climate
+      - ./data/processed/climate:/data/processed/climate
     depends_on:
       db:
         condition: service_healthy

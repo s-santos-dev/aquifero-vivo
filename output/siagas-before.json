@@ -1,0 +1,26 @@
+{
+  "wells": {
+    "count": 80,
+    "checksum": "e6d7fdb0e20c3ef1ac3de6ef020e6ee0"
+  },
+  "service_sectors": {
+    "count": 20,
+    "checksum": "a03751ab7809c5bf59e2648fd9aa62f2"
+  },
+  "well_sectors": {
+    "count": 80,
+    "checksum": "671193e1d62799396ca5107d49314d19"
+  },
+  "groundwater_measurements": {
+    "count": 58400,
+    "checksum": "606fe50556c53da116382cb22a815429"
+  },
+  "operational_measurements": {
+    "count": 58400,
+    "checksum": "a2042ab7a895fcb131c94d91378fe18a"
+  },
+  "rainfall_measurements": {
+    "count": 14600,
+    "checksum": "e1c3812da8debbedbf14dc0f6b357a14"
+  }
+}

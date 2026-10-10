@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from app.api.v1 import router as api_v1_router
+from app.climate.api import router as climate_router
 from app.config import get_settings
 
 app = FastAPI(
@@ -24,7 +25,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().cors_origins,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
@@ -39,3 +40,4 @@ def health() -> HealthResponse:
 
 
 app.include_router(api_v1_router)
+app.include_router(climate_router)

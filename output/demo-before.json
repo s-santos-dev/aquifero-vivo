@@ -1,0 +1,54 @@
+{
+  "alembic_version": {
+    "count": 1,
+    "sha256": "28e15f161f30a1d885b892bf8a93d50c1fa6be0ea3323c6263d33ac996d5c6b2"
+  },
+  "alerts": {
+    "count": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "climate_stations": {
+    "count": 1,
+    "sha256": "3873c4e6948d0590a73464a2e87d572cb66b6f1450cbd25d446088bfb4458c45"
+  },
+  "groundwater_measurements": {
+    "count": 58400,
+    "sha256": "98e87820807f7787dcec2dfbd00f6e123c6137eb636e825b87cb72fcbc566272"
+  },
+  "groundwater_observations": {
+    "count": 91,
+    "sha256": "2bfdfb91f5797d65d4efc6ef5545cfea05cc8a8e48dd17ef15d04a82bde1b610"
+  },
+  "operational_measurements": {
+    "count": 58400,
+    "sha256": "751912a14e75172476895d4c0520b760ad82f6205aee7112988f136861171319"
+  },
+  "rainfall_measurements": {
+    "count": 14600,
+    "sha256": "7e39b18cbf00df79242079ca3e61da50f181c7c7c330f91593978a10800b2453"
+  },
+  "rainfall_observations": {
+    "count": 2160,
+    "sha256": "aba7daf45885040d834b4abf31323a8a4b194183a29f1090a0bfe6b7bac95401"
+  },
+  "risk_assessments": {
+    "count": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "risk_factors": {
+    "count": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "service_sectors": {
+    "count": 20,
+    "sha256": "90b67129751083dcc2b9f30533f7468005e74fe50d303b20cede5c1738359558"
+  },
+  "well_sectors": {
+    "count": 80,
+    "sha256": "968da3528e97b73f93c837c7677eca774a43e6c4d8f28a356d63ec7c36bc61b1"
+  },
+  "wells": {
+    "count": 106,
+    "sha256": "b58bc2ad34bf487f53b96b64fc969559181197f2a0e2adc8a2833d6537bd2eaf"
+  }
+}

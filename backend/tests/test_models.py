@@ -8,8 +8,11 @@ from app.schemas import PointGeometry, WellCreate
 
 
 EXPECTED_TABLES = {
+    "climate_stations",
+    "rainfall_observations",
     "alerts",
     "groundwater_measurements",
+    "groundwater_observations",
     "operational_measurements",
     "rainfall_measurements",
     "risk_assessments",
@@ -36,6 +39,7 @@ def test_all_entities_have_uuid_and_audit_timestamps():
 
 def test_spatial_columns_use_srid_4326_and_gist_indexes():
     spatial_columns = {
+        "climate_stations": "location",
         "wells": "location",
         "rainfall_measurements": "location",
         "service_sectors": "boundary",

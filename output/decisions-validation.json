@@ -1,0 +1,21 @@
+{
+  "database_unchanged": true,
+  "tables_verified": 13,
+  "tables": {
+    "alembic_version": 1,
+    "alerts": 0,
+    "climate_stations": 1,
+    "groundwater_measurements": 58400,
+    "groundwater_observations": 91,
+    "operational_measurements": 58400,
+    "rainfall_measurements": 14600,
+    "rainfall_observations": 2160,
+    "risk_assessments": 0,
+    "risk_factors": 0,
+    "service_sectors": 20,
+    "well_sectors": 80,
+    "wells": 106
+  },
+  "backend_tests": 235,
+  "browser": "API real: busca, fontes, classificação, setor, município, ordenação, mapa, modo técnico, histórico, comparação, insuficiência, erro API e recuperação, demo, alternativas, cópia, fontes públicas, viewport 390x844"
+}

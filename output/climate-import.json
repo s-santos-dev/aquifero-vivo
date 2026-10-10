@@ -1,0 +1,127 @@
+{
+  "report_file": "/data/processed/climate/20261010T171834Z-02a03add-31e8fd70.json",
+  "station": "A237",
+  "batch": "20261010T171834Z-02a03add",
+  "start": "2025-01-01",
+  "end": "2025-03-31",
+  "accepted": 2160,
+  "observed": 2160,
+  "missing_values": 0,
+  "absent_or_rejected_intervals": 0,
+  "duplicates": 0,
+  "rejected": [],
+  "complete_days": 90,
+  "expected_days": 90,
+  "provenance": {
+    "batch": "20261010T171834Z-02a03add",
+    "extracted_at": "2026-10-10T17:18:34.874668+00:00",
+    "source": "INMET",
+    "station": "A237",
+    "start": "2025-01-01",
+    "end": "2025-03-31",
+    "source_url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+    "request": {
+      "method": "GET",
+      "url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip"
+    },
+    "response_headers": {},
+    "acquisition": "official_browser_download",
+    "archive_member": "2025/INMET_NE_MA_A237_CAXIAS_01-01-2025_A_31-12-2025.CSV",
+    "archive_sha256": "14988d0b736ba969b48881589f602f3a6d7e97b95bd1de934456851fdac2cb89",
+    "raw_sha256": "439fce282060d45d44b1101c39f25ea3b88e79eb9c68dfa0378410d5428c3e26",
+    "timezone": "UTC",
+    "unit": "mm",
+    "interval": "previous_hour",
+    "format": "INMET_ANNUAL_AUTOMATIC_CSV"
+  },
+  "load": {
+    "created_stations": 1,
+    "created_observations": 2160,
+    "unchanged_observations": 0,
+    "preserved": true,
+    "before": {
+      "wells": {
+        "count": 106,
+        "sha256": "d981cb708ac05d89cb024aa3272e5baba5be420e673c0d9345c4936dbd6b70db"
+      },
+      "service_sectors": {
+        "count": 20,
+        "sha256": "2ddb947a6a1e50b7aa52084d01437ab87d39c3f29a572edbdb7e442615636189"
+      },
+      "well_sectors": {
+        "count": 80,
+        "sha256": "1fbd2d64d72e860120cf0c3d3da08a352d4000923751bec7c0f6e25a9f9d0b23"
+      },
+      "groundwater_measurements": {
+        "count": 58400,
+        "sha256": "614391abaa0ba92cdcfeab993199390bdd3e3fa99f9c5b65afce5e90cdd0ea36"
+      },
+      "operational_measurements": {
+        "count": 58400,
+        "sha256": "33ec64d6679f6460b269b280a56a171bfe7209076447d15f68f818627e1f88a4"
+      },
+      "rainfall_measurements": {
+        "count": 14600,
+        "sha256": "57127e8fb9299bc7d8d4feea691393a6a0919b0eacb0c4ef6f1dbfa466c65cf4"
+      },
+      "groundwater_observations": {
+        "count": 91,
+        "sha256": "b468977d522163df301778f192ba4fa67f933bf721ab8b66eade5bd67a494117"
+      },
+      "risk_assessments": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "risk_factors": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "alerts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "after": {
+      "wells": {
+        "count": 106,
+        "sha256": "d981cb708ac05d89cb024aa3272e5baba5be420e673c0d9345c4936dbd6b70db"
+      },
+      "service_sectors": {
+        "count": 20,
+        "sha256": "2ddb947a6a1e50b7aa52084d01437ab87d39c3f29a572edbdb7e442615636189"
+      },
+      "well_sectors": {
+        "count": 80,
+        "sha256": "1fbd2d64d72e860120cf0c3d3da08a352d4000923751bec7c0f6e25a9f9d0b23"
+      },
+      "groundwater_measurements": {
+        "count": 58400,
+        "sha256": "614391abaa0ba92cdcfeab993199390bdd3e3fa99f9c5b65afce5e90cdd0ea36"
+      },
+      "operational_measurements": {
+        "count": 58400,
+        "sha256": "33ec64d6679f6460b269b280a56a171bfe7209076447d15f68f818627e1f88a4"
+      },
+      "rainfall_measurements": {
+        "count": 14600,
+        "sha256": "57127e8fb9299bc7d8d4feea691393a6a0919b0eacb0c4ef6f1dbfa466c65cf4"
+      },
+      "groundwater_observations": {
+        "count": 91,
+        "sha256": "b468977d522163df301778f192ba4fa67f933bf721ab8b66eade5bd67a494117"
+      },
+      "risk_assessments": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "risk_factors": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "alerts": {
+        "count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  }
+}

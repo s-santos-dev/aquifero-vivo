@@ -1,0 +1,129 @@
+{
+  "objectIdFieldName": "idt_ponto",
+  "globalIdFieldName": "",
+  "geometryType": "esriGeometryPoint",
+  "spatialReference": {
+    "wkid": 4326,
+    "latestWkid": 4326
+  },
+  "features": [
+    {
+      "attributes": {
+        "objectid": 77677,
+        "idt_ponto": 2200009783,
+        "num_latitude_decimal": -5.091388,
+        "num_longitude_decimal": -42.814444,
+        "num_municipio": 2211001,
+        "str_municipio": "Teresina",
+        "str_uf": "PI",
+        "regiao": "Nordeste",
+        "estados": "Piauí",
+        "str_uf_sureg": "PI",
+        "str_local_ponto": "SEDE MUNICIPAL",
+        "str_nome_ponto": null,
+        "str_natureza_ponto": "Poço tubular",
+        "str_tipo_situacao": null,
+        "str_uso_agua": null,
+        "str_aquifero": "Piaui",
+        "num_profundidade": 100.0,
+        "num_ph": null,
+        "num_condutividade_eletrica": null,
+        "num_cor": null,
+        "num_temperatura": null,
+        "str_turbidez": null,
+        "nd": 46.0,
+        "ne": 7.0,
+        "num_vazao_especifica": 1.28,
+        "str_parametro_amostra_quimica": null,
+        "num_concentracao_quimica": null,
+        "data_perfuracao": null,
+        "data_cadastro": 1061769600000,
+        "data_instalacao": null,
+        "status_rimas": "Siagas"
+      },
+      "geometry": {
+        "x": -42.81444399999998,
+        "y": -5.091387999999938
+      }
+    },
+    {
+      "attributes": {
+        "objectid": 245580,
+        "idt_ponto": 2200015566,
+        "num_latitude_decimal": -5.37,
+        "num_longitude_decimal": -42.750277,
+        "num_municipio": 2211001,
+        "str_municipio": "Teresina",
+        "str_uf": "PI",
+        "regiao": "Nordeste",
+        "estados": "Piauí",
+        "str_uf_sureg": "PI",
+        "str_local_ponto": "ASSENTAMENTO MUTUM ",
+        "str_nome_ponto": "GN374",
+        "str_natureza_ponto": "Poço tubular",
+        "str_tipo_situacao": "Não instalado",
+        "str_uso_agua": null,
+        "str_aquifero": null,
+        "num_profundidade": 70.0,
+        "num_ph": null,
+        "num_condutividade_eletrica": 486.0,
+        "num_cor": null,
+        "num_temperatura": null,
+        "str_turbidez": "",
+        "nd": null,
+        "ne": 3.0,
+        "num_vazao_especifica": null,
+        "str_parametro_amostra_quimica": "Solidos dissolvidos totais",
+        "num_concentracao_quimica": 315.9,
+        "data_perfuracao": 1025481600000,
+        "data_cadastro": 1060905600000,
+        "data_instalacao": null,
+        "status_rimas": "Siagas"
+      },
+      "geometry": {
+        "x": -42.75027699999998,
+        "y": -5.369999999999948
+      }
+    },
+    {
+      "attributes": {
+        "objectid": 214293,
+        "idt_ponto": 2200023832,
+        "num_latitude_decimal": -5.011944,
+        "num_longitude_decimal": -42.606666,
+        "num_municipio": 2211001,
+        "str_municipio": "Teresina",
+        "str_uf": "PI",
+        "regiao": "Nordeste",
+        "estados": "Piauí",
+        "str_uf_sureg": "PI",
+        "str_local_ponto": "MARINGA",
+        "str_nome_ponto": "HB298",
+        "str_natureza_ponto": "Poço tubular",
+        "str_tipo_situacao": "Não instalado",
+        "str_uso_agua": null,
+        "str_aquifero": null,
+        "num_profundidade": 60.0,
+        "num_ph": null,
+        "num_condutividade_eletrica": 260.0,
+        "num_cor": null,
+        "num_temperatura": null,
+        "str_turbidez": "",
+        "nd": null,
+        "ne": 14.4,
+        "num_vazao_especifica": null,
+        "str_parametro_amostra_quimica": "Solidos dissolvidos totais",
+        "num_concentracao_quimica": 169,
+        "data_perfuracao": 1041897600000,
+        "data_cadastro": 1061251200000,
+        "data_instalacao": null,
+        "status_rimas": "Siagas"
+      },
+      "geometry": {
+        "x": -42.60666599999996,
+        "y": -5.011943999999971
+      }
+    }
+  ],
+  "exceededTransferLimit": false
+}

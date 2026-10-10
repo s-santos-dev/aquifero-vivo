@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 from decimal import Decimal
-from typing import Generic, Literal, TypeVar
+from typing import Any, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, Field, computed_field
 
@@ -31,7 +31,10 @@ class WellResponse(CatalogProvenance):
     municipality: str | None
     state: str | None
     depth_m: Decimal | None
-    is_active: bool
+    is_active: bool | None
+    source_record_id: str | None = None
+    has_rimas_observations: bool = False
+    source_metadata: dict[str, Any] | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -54,6 +57,12 @@ class DashboardSummaryResponse(BaseModel):
     inactive_wells: int = Field(ge=0)
     total_sectors: int = Field(ge=0)
     total_measurements: int = Field(ge=0)
+    rimas_observations: int = Field(default=0, ge=0)
+    simulated_wells: int = Field(default=0, ge=0)
+    siagas_wells: int = Field(default=0, ge=0)
+    unknown_status_wells: int = Field(default=0, ge=0)
+    evaluable_wells: int = Field(default=0, ge=0)
+    analysis_date: str | None = None
 
 
 MeasurementType = Literal["groundwater", "operational", "rainfall"]
@@ -83,6 +92,12 @@ class MeasurementResponse(BaseModel):
     utilization: Decimal | None = None
     operational_failure: bool | None = None
     water_level_m: Decimal | None = None
+    observed_level_m: Decimal | None = None
+    unit: str | None = None
+    dataset: str | None = None
+    pumping: str | None = None
+    source_record_id: str | None = None
+    source_metadata: dict[str, Any] | None = None
     temperature_c: Decimal | None = None
     ph: Decimal | None = None
     conductivity_us_cm: Decimal | None = None

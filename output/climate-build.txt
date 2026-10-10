@@ -1,0 +1,16 @@
+
+> aquifero-vivo-frontend@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 725 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               0.45 kB │ gzip:   0.29 kB
+dist/assets/index-C80eRE5A.css               46.20 kB │ gzip:  13.58 kB
+dist/assets/MeasurementHistory-DVEJ5dap.js   28.57 kB │ gzip:   9.41 kB
+dist/assets/Pages-C3j2cu_M.js                82.21 kB │ gzip:  23.48 kB
+dist/assets/CartesianChart-DFg0v83O.js      347.04 kB │ gzip: 102.97 kB
+dist/assets/index-4niyE5eF.js               475.68 kB │ gzip: 146.38 kB
+✓ built in 14.44s

@@ -1,0 +1,192 @@
+{
+  "checksums_preserved": true,
+  "summary": {
+    "total_wells": 105,
+    "active_wells": 77,
+    "inactive_wells": 3,
+    "total_sectors": 20,
+    "total_measurements": 131400,
+    "simulated_wells": 80,
+    "siagas_wells": 25,
+    "unknown_status_wells": 25,
+    "evaluable_wells": 80,
+    "analysis_date": "2025-12-30"
+  },
+  "public_risks": [
+    {
+      "classification": null,
+      "code": "SIAGAS-2200009783",
+      "id": "92be84c0-e52e-5d02-b162-afbd2c97d8fb",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200015566",
+      "id": "7a4ae818-505b-5353-a653-bcc3be68f4c0",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200023832",
+      "id": "79dd016f-8eda-57ba-8fce-4138a313ac72",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200023845",
+      "id": "4e0fa713-ac13-559e-92af-7d9479b733e7",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200023972",
+      "id": "48dbe902-e9e3-5ee4-9559-5a9c9d0ab1fb",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200024027",
+      "id": "f875ff4d-434c-598e-8eb6-81826d91b04d",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200024138",
+      "id": "c2513575-2739-56d7-861f-8108932a8595",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200024278",
+      "id": "197a39c8-c399-5311-98cc-844a88099071",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032633",
+      "id": "9b03278a-8c90-565a-a886-c4b4b9daa7e3",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032634",
+      "id": "97c9bd57-b2e7-5999-8428-296f74c6b61b",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032635",
+      "id": "59f65a22-59f0-529e-956a-f1bf8cd5699d",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032636",
+      "id": "eeab30f2-037f-5ba8-9457-b8595fa80122",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032637",
+      "id": "26f0d753-0291-5b31-a044-edc5f84cbfc9",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032638",
+      "id": "2507db4e-5cf4-554a-b14a-05820ae1f45d",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032639",
+      "id": "d8d38e7b-19f7-5331-ad9e-ec12f3e37387",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032640",
+      "id": "81f8b581-4a5f-555d-93c6-177e1358b704",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032641",
+      "id": "f84a2ea1-3cad-537d-8062-176c2d1ab555",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032642",
+      "id": "12f30969-bc29-5a35-ab0e-1348bb1948df",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032643",
+      "id": "01ae1d38-4590-5f64-8e27-d605bc22ea55",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032644",
+      "id": "ab0d3399-11c6-5c6b-9409-2827871d7da0",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032646",
+      "id": "1ed2151a-535f-5904-af32-8cf0bd4218ac",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032647",
+      "id": "16ff7837-bd86-5034-b705-227cb8c90d4c",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032648",
+      "id": "26fd5493-fdf8-5a2d-ae8d-15a65fb91538",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032649",
+      "id": "c1464f39-ca96-5610-a0d1-10cb0455c854",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    },
+    {
+      "classification": null,
+      "code": "SIAGAS-2200032650",
+      "id": "95d967ec-6db2-5bfa-9fb6-17d66f0f9e71",
+      "score": null,
+      "status": "INSUFFICIENT_DATA"
+    }
+  ]
+}

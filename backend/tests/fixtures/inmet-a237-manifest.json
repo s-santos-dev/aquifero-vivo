@@ -1,0 +1,23 @@
+{
+  "batch": "20261010T171834Z-02a03add",
+  "extracted_at": "2026-10-10T17:18:34.874668+00:00",
+  "source": "INMET",
+  "station": "A237",
+  "start": "2025-01-01",
+  "end": "2025-01-01",
+  "source_url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+  "request": {
+    "method": "GET",
+    "url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip"
+  },
+  "response_headers": {},
+  "acquisition": "official_browser_download",
+  "archive_member": "2025/INMET_NE_MA_A237_CAXIAS_01-01-2025_A_31-12-2025.CSV",
+  "archive_sha256": "14988d0b736ba969b48881589f602f3a6d7e97b95bd1de934456851fdac2cb89",
+  "raw_sha256": "4438fcf56ae901726dd46b2cb9c1a3c918a84bc9c1def1b6e78550ecf6ce9a8f",
+  "timezone": "UTC",
+  "unit": "mm",
+  "interval": "previous_hour",
+  "format": "INMET_ANNUAL_AUTOMATIC_CSV",
+  "fixture_note": "Linhas oficiais inalteradas: 2025-01-01 00:00 a 2025-01-02 00:00 UTC. Subconjunto do arquivo anual; checksum do ZIP original preservado."
+}

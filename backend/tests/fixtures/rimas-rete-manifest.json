@@ -1,0 +1,102 @@
+{
+  "batch": "official-rete-subset",
+  "extracted_at": "2026-10-10T16:53:20.312086+00:00",
+  "source_url": "https://rimasweb.sgb.gov.br/layout/exportaDadosGrafico.php",
+  "registry_url": "https://geoportal.sgb.gov.br/server/rest/services/Hosted/siagas_web/FeatureServer/2",
+  "station": "2200034952",
+  "start": "2025-01-01",
+  "end": "2025-03-31",
+  "raw_sha256": "feb2a9c3775f9d1a4eb3ddc97b0db896fc95a8389d76acfc25d8150304934bc2",
+  "request": {
+    "acao": "exportacao",
+    "tipoExp": "expCsv",
+    "grafico": "nivelDagua",
+    "idponto": "2200034952",
+    "intervaloDataMin": "01/01/2025",
+    "intervaloDataMax": "31/03/2025"
+  },
+  "response_headers": {},
+  "acquisition": "official_csv_export",
+  "registry": {
+    "hasZ": false,
+    "features": [
+      {
+        "attributes": {
+          "idt_ponto": 2200034952,
+          "str_municipio": "Teresina",
+          "status_rimas": "Rimas",
+          "str_nome_ponto": "RETE",
+          "str_uf": "PI",
+          "num_profundidade": 47.07
+        },
+        "geometry": {
+          "x": -42.79944399999994,
+          "y": -5.088055999999938
+        }
+      }
+    ],
+    "exceededTransferLimit": false,
+    "hasM": false,
+    "objectIdFieldName": "idt_ponto",
+    "fields": [
+      {
+        "defaultValue": null,
+        "length": 8,
+        "type": "esriFieldTypeOID",
+        "modelName": "idt_ponto",
+        "name": "idt_ponto",
+        "alias": "idt_ponto"
+      },
+      {
+        "modelName": "str_uf",
+        "defaultValue": null,
+        "name": "str_uf",
+        "length": 2,
+        "alias": "str_uf",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "modelName": "str_municipio",
+        "defaultValue": null,
+        "name": "str_municipio",
+        "length": 50,
+        "alias": "str_municipio",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "modelName": "str_nome_ponto",
+        "defaultValue": null,
+        "name": "str_nome_ponto",
+        "length": 80,
+        "alias": "str_nome_ponto",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "modelName": "num_profundidade",
+        "defaultValue": null,
+        "name": "num_profundidade",
+        "alias": "num_profundidade",
+        "type": "esriFieldTypeDouble"
+      },
+      {
+        "modelName": "status_rimas",
+        "defaultValue": null,
+        "name": "status_rimas",
+        "length": 60000,
+        "alias": "status_rimas",
+        "type": "esriFieldTypeString"
+      }
+    ],
+    "spatialReference": {
+      "latestWkid": 4326,
+      "wkid": 4326
+    },
+    "geometryType": "esriGeometryPoint"
+  },
+  "unit": "m",
+  "unit_evidence": "https://rimasweb.sgb.gov.br/layout/detalhe.php?ponto=2200034952",
+  "timezone": "UNKNOWN",
+  "level_reference": "UNKNOWN",
+  "treatment": "PORTAL_EXPORT_UNSPECIFIED",
+  "fixture_note": "Five unchanged original observations selected from the official 2025 Q1 export; immutable full export kept outside Git."
+}

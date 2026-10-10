@@ -1,0 +1,8 @@
+{
+  "wells": {"count": 105, "sha256": "ff0fcbc0969a69d88904d155b1ffb94102cddd5136f0f31236ef14d92796869e"},
+  "service_sectors": {"count": 20, "sha256": "90b67129751083dcc2b9f30533f7468005e74fe50d303b20cede5c1738359558"},
+  "well_sectors": {"count": 80, "sha256": "968da3528e97b73f93c837c7677eca774a43e6c4d8f28a356d63ec7c36bc61b1"},
+  "groundwater_measurements": {"count": 58400, "sha256": "98e87820807f7787dcec2dfbd00f6e123c6137eb636e825b87cb72fcbc566272"},
+  "operational_measurements": {"count": 58400, "sha256": "751912a14e75172476895d4c0520b760ad82f6205aee7112988f136861171319"},
+  "rainfall_measurements": {"count": 14600, "sha256": "7e39b18cbf00df79242079ca3e61da50f181c7c7c330f91593978a10800b2453"}
+}
