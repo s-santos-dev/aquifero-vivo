@@ -1,0 +1,148 @@
+{
+  "well_id": "b934083e-91c9-515e-b1fb-79319194b61d",
+  "well_code": "SIM-PI-001",
+  "reference_date": "2025-12-30",
+  "data_classification": "SIMULATED",
+  "source": "SIMULATED:AQUIFERO_VIVO",
+  "model_version": "multicriteria-v1.0.0",
+  "experimental": true,
+  "score": 20.2796,
+  "status": "AVAILABLE",
+  "classification": "NORMAL",
+  "coverage": 1.0,
+  "minimum_coverage": 0.8,
+  "subscores": {
+    "pumping": 100.0,
+    "demand": 1.1280000000000001,
+    "groundwater": 0.17999999999999997,
+    "rainfall": 0.0,
+    "operations": 0.0
+  },
+  "factors": [
+    {
+      "group": "pumping",
+      "name": "Pressão de bombeamento",
+      "status": "AVAILABLE",
+      "indicators": [
+        {
+          "section": "operations",
+          "indicator": "pumping_hours_avg_30d",
+          "value": 24.0,
+          "unit": "h/dia",
+          "status": "AVAILABLE",
+          "normalized": 100.0
+        },
+        {
+          "section": "operations",
+          "indicator": "utilization_avg_30d",
+          "value": 1.10692,
+          "unit": "fração",
+          "status": "AVAILABLE",
+          "normalized": 100.0
+        }
+      ],
+      "subscore": 100.0,
+      "weight": 0.2,
+      "effective_weight": 0.2,
+      "contribution": 20.0,
+      "explanation": "Pressão de bombeamento: média dos critérios normalizados (pumping_hours_avg_30d: 24 h/dia → 100.00/100; utilization_avg_30d: 1.10692 fração → 100.00/100). Escala experimental."
+    },
+    {
+      "group": "demand",
+      "name": "Pressão de demanda",
+      "status": "AVAILABLE",
+      "indicators": [
+        {
+          "section": "operations",
+          "indicator": "demand_pressure_30d",
+          "value": 0.00564,
+          "unit": "fração",
+          "status": "AVAILABLE",
+          "normalized": 1.1280000000000001
+        }
+      ],
+      "subscore": 1.1280000000000001,
+      "weight": 0.2,
+      "effective_weight": 0.2,
+      "contribution": 0.22560000000000002,
+      "explanation": "Pressão de demanda: média dos critérios normalizados (demand_pressure_30d: 0.00564 fração → 1.13/100). Escala experimental."
+    },
+    {
+      "group": "groundwater",
+      "name": "Estresse subterrâneo",
+      "status": "AVAILABLE",
+      "indicators": [
+        {
+          "section": "groundwater",
+          "indicator": "static_level_trend_30d",
+          "value": 0.00054,
+          "unit": "m/dia",
+          "status": "AVAILABLE",
+          "normalized": 0.5399999999999999
+        },
+        {
+          "section": "groundwater",
+          "indicator": "drawdown_trend_30d",
+          "value": -0.00213,
+          "unit": "m/dia",
+          "status": "AVAILABLE",
+          "normalized": 0.0
+        },
+        {
+          "section": "operations",
+          "indicator": "flow_trend_30d",
+          "value": 0.01007,
+          "unit": "m³/h/dia",
+          "status": "AVAILABLE",
+          "normalized": 0.0
+        }
+      ],
+      "subscore": 0.17999999999999997,
+      "weight": 0.3,
+      "effective_weight": 0.3,
+      "contribution": 0.053999999999999986,
+      "explanation": "Estresse subterrâneo: média dos critérios normalizados (static_level_trend_30d: 0.00054 m/dia → 0.54/100; drawdown_trend_30d: -0.00213 m/dia → 0.00/100; flow_trend_30d: 0.01007 m³/h/dia → 0.00/100). Escala experimental."
+    },
+    {
+      "group": "rainfall",
+      "name": "Déficit de precipitação",
+      "status": "AVAILABLE",
+      "indicators": [
+        {
+          "section": "rainfall",
+          "indicator": "recent_rainfall_deficit_30d",
+          "value": 0.0,
+          "unit": "fração",
+          "status": "AVAILABLE",
+          "normalized": 0.0
+        }
+      ],
+      "subscore": 0.0,
+      "weight": 0.2,
+      "effective_weight": 0.2,
+      "contribution": 0.0,
+      "explanation": "Déficit de precipitação: média dos critérios normalizados (recent_rainfall_deficit_30d: 0 fração → 0.00/100). Escala experimental."
+    },
+    {
+      "group": "operations",
+      "name": "Estresse operacional",
+      "status": "AVAILABLE",
+      "indicators": [
+        {
+          "section": "operations",
+          "indicator": "failures_30d",
+          "value": 0.0,
+          "unit": "falhas",
+          "status": "AVAILABLE",
+          "normalized": 0.0
+        }
+      ],
+      "subscore": 0.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 0.0,
+      "explanation": "Estresse operacional: média dos critérios normalizados (failures_30d: 0 falhas → 0.00/100). Escala experimental."
+    }
+  ],
+  "unavailable_groups": []
+}
